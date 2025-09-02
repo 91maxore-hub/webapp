@@ -23,10 +23,9 @@ jobs:
     - name: Deploy to VM
       run: |
         ssh -i ~/.ssh/id_rsa azureuser@10.0.1.4 << 'EOF'
-          cd /var/www/html/webapp
+          cd /var/www/html
           git pull origin main
-          # Här kan du lägga till fler kommandon om du behöver, t.ex:
+          # Lägg till andra kommandon om det behövs, t.ex.:
           # composer install
-          # php artisan migrate
           sudo systemctl reload apache2 || sudo systemctl reload nginx
         EOF
