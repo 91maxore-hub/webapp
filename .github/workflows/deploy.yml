@@ -1,0 +1,32 @@
+name: Deploy PHP App to Azure Ubuntu VM
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up SSH
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H 10.0.1.4 >> ~/.ssh/known_hosts
+
+    - name: Deploy to VM
+      run: |
+        ssh -i ~/.ssh/id_rsa azureuser@10.0.1.4 << 'EOF'
+          cd /var/www/html/webapp
+          git pull origin main
+          # Här kan du lägga till fler kommandon om du behöver, t.ex:
+          # composer install
+          # php artisan migrate
+          sudo systemctl reload apache2 || sudo systemctl reload nginx
+        EOF
