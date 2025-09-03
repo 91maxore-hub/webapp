@@ -75,6 +75,14 @@ Efter att applikationsservern var på plats skapades en virtuell maskin som fung
 | **Virtuellt nätverk** | `vnet-webapp-mysql`                                   |
 | **Subnet**            | `reverseproxy-subnet (10.0.3.0/24)`                   |
 
+## 🔄 Reverse Proxy-server
+
+**Operativsystem**: Ubuntu 24.04 LTS
+- Tar emot och hanterar alla inkommande HTTP/HTTPS-förfrågningar
+- Utför SSL-terminering med hjälp av Let's Encrypt-certifikat
+- Proxyar och vidarebefordrar trafik till applikationsservern på interna IP-adresser
+- Förbättrar säkerheten genom att agera som en barriär och begränsa direkt åtkomst till applikationsservern
+
 # Bastion-host server (VM)
 
 Efter att både applikationsservern och reverse proxy-servern var på plats skapades en virtuell maskin som fungerar som bastion-host. Denna server ansvarar för att ge säker fjärråtkomst till resurser i det privata nätverket, utan att exponera dem direkt mot internet. Bastion-host fungerar som en säker gateway för administration, och minskar risken för obehörig åtkomst genom att centralisera och skydda anslutningarna.
@@ -89,6 +97,14 @@ Efter att både applikationsservern och reverse proxy-servern var på plats skap
 | **Storlek**           | Standard\_B1s (kostnadseffektiv för utbildningssyfte) |
 | **Virtuellt nätverk** | `vnet-webapp-mysql`                                   |
 | **Subnet**            | `bastion-subnet (10.0.4.0/24)`                        |
+
+## 🔐 Bastion Host (Säker SSH-access)
+
+- Ger säker fjärråtkomst till resurser i det privata nätverket
+- Fungerar som en säker gateway för SSH-anslutningar till interna servrar
+- Används som hopppunkt (ProxyJump) vid fjärradministration och i CI/CD-pipelines
+- Centraliserar och begränsar åtkomst för att minska risken för obehörig åtkomst
+- Skyddar interna servrar genom att undvika direkt exponering mot internet
 
 
 # Databaskonfiguration: Azure Database for MySQL – Flexible Server
