@@ -37,6 +37,7 @@ En enkel men komplett webbapplikation som visar mitt namn och innehåller ett ko
 ## 🖥️ Applikationsserver (Appserver)
 
 - Operativsystem: Ubuntu 24.04 LTS
+
 Funktion:
 - Kör webbapplikationen (PHP, MySQL-anslutningar etc.)
 - Hanterar logik och databasinteraktion
@@ -46,6 +47,7 @@ Funktion:
 
 - Operativsystem: Ubuntu 24.04 LTS
 - Webbserver: NGINX
+
 Funktion:
 - Hanterar inkommande trafik och skyddar backend-servrar
 - Terminerar HTTPS-anslutningar (SSL-certifikat via Let's Encrypt eller annan leverantör)
@@ -55,6 +57,7 @@ Funktion:
 ## 🔐 Bastion Host (Säker SSH-access)
 
 - Operativsystem: Ubuntu 24.04 LTS
+
 Funktion:
 - Säker gateway för SSH-anslutningar till interna servrar
 - Används som hopppunkt (ProxyJump) vid fjärråtkomst och i CI/CD pipelines
