@@ -21,10 +21,15 @@ En enkel men komplett webbapplikation som visar mitt namn och innehåller ett ko
 /webapp
 
 ├── contact_form.html
+
 ├── database_setup.php
+
 ├── index.html
+
 ├── on_get_messages.php
+
 ├── on_post_contact.php
+
 └── style.css
 
 ## ☁️ Infrastruktur & Deployment
