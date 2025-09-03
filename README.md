@@ -46,7 +46,7 @@ För automatiserad installation och konfiguration av programvaran användes en c
 
 # Skapande av reverse proxy-server (VM)
 
-Efter att applikationsservern var på plats skapades en virtuell maskin som fungerar som reverse proxy-server. Denna server ansvarar för att ta emot och hantera alla inkommande HTTP/HTTPS-förfrågningar, vidarebefordra dem till backend-webbservern, samt förbättra säkerheten genom att agera som en barriär mellan internet och interna resurser. Reverse proxy-servern hanterar också SSL-terminering, lastbalansering och kan bidra till att optimera prestanda genom cachning.
+Efter att applikationsservern var på plats skapades en virtuell maskin som fungerar som reverse proxy-server. Denna server ansvarar för att ta emot och hantera alla inkommande HTTP/HTTPS-förfrågningar, vidarebefordra dem till backend-webbservern, samt förbättra säkerheten genom att agera som en barriär mellan internet och interna resurser. Reverse proxy-servern hanterar också SSL-terminering, lastbalansering och kan bidra till att optimera prestanda genom cachning. Reverse Proxy-konfigurationen är bifogat sista i rapporten.
 
 **Konfiguration av virtuell maskin**
 
