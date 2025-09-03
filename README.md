@@ -272,8 +272,8 @@ runcmd:
 
   ## 📄 php-file.php
 
-  '''php
-  <?php
+```php
+<?php
 // Azure MySQL Database configuration
 // Replace with your actual Azure MySQL server details
 $host = getenv('MYSQL_HOST') ?: '[YOUR-MYSQL-SERVER-NAME].mysql.database.azure.com';
