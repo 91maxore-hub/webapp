@@ -203,9 +203,9 @@ Applikationen använder en CI/CD-pipeline (Continuous Integration & Continuous D
 
 Cloud-init: Automatiserad serverkonfiguration
 
-# Application Server Setup (LEMP Stack on Azure)
+# Bilagor till koder somm tillhör webbapplikationen
 
-Det här är en `cloud-config`-fil som automatiserar installationen av en LEMP-stack (Linux, Nginx, MySQL, PHP) på en Ubuntu-server – anpassad för att ansluta till Azure MySQL.
+Här hittar du samlade kodbilagor och konfigurationsfiler som hör till webbapplikationen. Dessa filer utgör viktiga delar av applikationens backend och servermiljö, och visar bland annat hur servern är uppsatt, hur databasen ansluts samt hur applikationen hanterar data.
 
 ## 📄 cloud-config.yaml
 
