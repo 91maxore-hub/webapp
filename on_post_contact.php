@@ -1,4 +1,5 @@
 <?php
+// CI/CD Pipeline
 
 if (!defined('CURLOPT_SSLVERSION')) {
     define('CURLOPT_SSLVERSION', 32);

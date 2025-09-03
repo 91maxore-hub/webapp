@@ -1,4 +1,5 @@
 <?php
+// CI/CD Pipeline
 // Handle GET request to display all contact messages
 require_once 'database_setup.php';
 

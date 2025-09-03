@@ -1,6 +1,7 @@
 <?php
 // Azure MySQL Database configuration
 // Replace with your actual Azure MySQL server details
+// CI/CD Pipeline
 $host = getenv('MYSQL_HOST') ?: 'mysql-webapp-01.mysql.database.azure.com';
 $dbname = getenv('MYSQL_DATABASE') ?: 'contactforms';
 $username = getenv('MYSQL_USERNAME') ?: 'mysqladmin';
