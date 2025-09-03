@@ -44,6 +44,37 @@ Efter att nätverksinfrastrukturen var på plats skapades en virtuell maskin som
 
 För automatiserad installation och konfiguration av programvaran användes en cloud-init-fil. Denna fil ser till att alla nödvändiga komponenter för applikationsdrift installeras och konfigureras vid uppstart.
 
+# Skapande av reverse proxy-server (VM)
+
+Efter att applikationsservern var på plats skapades en virtuell maskin som fungerar som reverse proxy-server. Denna server ansvarar för att ta emot och hantera alla inkommande HTTP/HTTPS-förfrågningar, vidarebefordra dem till backend-webbservern, samt förbättra säkerheten genom att agera som en barriär mellan internet och interna resurser. Reverse proxy-servern hanterar också SSL-terminering, lastbalansering och kan bidra till att optimera prestanda genom cachning.
+
+**Konfiguration av virtuell maskin**
+
+| **Parameter**         | Värde                                                 |
+| --------------------- | ----------------------------------------------------- |
+| **Namn**              | `vm-reverseproxy`                                     |
+| **Region**            | North Europe                                          |
+| **Image**             | Ubuntu Server 22.04 LTS – x64 Gen2                    |
+| **Storlek**           | Standard\_B1s (kostnadseffektiv för utbildningssyfte) |
+| **Virtuellt nätverk** | `vnet-webapp-mysql`                                   |
+| **Subnet**            | `reverseproxy-subnet (10.0.3.0/24)`                   |
+
+# Skapande av bastion-host server (VM)
+
+Efter att både applikationsservern och reverse proxy-servern var på plats skapades en virtuell maskin som fungerar som bastion-host. Denna server ansvarar för att ge säker fjärråtkomst till resurser i det privata nätverket, utan att exponera dem direkt mot internet. Bastion-host fungerar som en säker gateway för administration, och minskar risken för obehörig åtkomst genom att centralisera och skydda anslutningarna.
+
+**Konfiguration av virtuell maskin**
+
+| **Parameter**         | Värde                                                 |
+| --------------------- | ----------------------------------------------------- |
+| **Namn**              | `vm-bastion-host`                                     |
+| **Region**            | North Europe                                          |
+| **Image**             | Ubuntu Server 22.04 LTS – x64 Gen2                    |
+| **Storlek**           | Standard\_B1s (kostnadseffektiv för utbildningssyfte) |
+| **Virtuellt nätverk** | `vnet-webapp-mysql`                                   |
+| **Subnet**            | `bastion-subnet (10.0.4.0/24)`                        |
+
+
 # Databaskonfiguration: Azure Database for MySQL – Flexible Server
 
 För att hantera lagring och hantering av applikationens databas skapades en Azure Database for MySQL – Flexible Server. Denna tjänst är optimerad för utvecklingsmiljöer och erbjuder hög tillgänglighet, automatiska säkerhetskopior samt flexibel resurshantering.
