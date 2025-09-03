@@ -27,7 +27,7 @@ Genom att segmentera det virtuella nätverket i dedikerade subnät för olika fu
 - 🔁 **Trafikstyrning och filtrering:** Med ett separat reverseproxy-subnet kan inkommande trafik kontrolleras och filtreras innan den når applikationen. Detta möjliggör implementation av t.ex. brandväggsregler, TLS-terminering och lastbalansering.
 - 👨‍💻 **Säker administration:** Genom att använda en Bastion Host i ett eget bastionhost-subnet undviks behovet av att öppna portar för SSH direkt mot de virtuella maskinerna. All åtkomst sker via Azure Bastion, vilket erbjuder en säker och spårbar inloggningsmetod.
 
-# Skapande av applikationsserver (VM)
+# Aapplikationsserver (VM)
 
 Efter att nätverksinfrastrukturen var på plats skapades en virtuell maskin som fungerar som applikationsserver. Denna server är ansvarig för att köra webbapplikationen samt ansluta till databasen via LEMP-stacken (Linux, Nginx, MySQL, PHP).
 
@@ -44,7 +44,7 @@ Efter att nätverksinfrastrukturen var på plats skapades en virtuell maskin som
 
 För automatiserad installation och konfiguration av programvaran användes en cloud-init-fil. Denna fil ser till att alla nödvändiga komponenter för applikationsdrift installeras och konfigureras vid uppstart.
 
-# Skapande av reverse proxy-server (VM)
+# Reverse proxy-server (VM)
 
 Efter att applikationsservern var på plats skapades en virtuell maskin som fungerar som reverse proxy-server. Denna server ansvarar för att ta emot och hantera alla inkommande HTTP/HTTPS-förfrågningar, vidarebefordra dem till backend-webbservern, samt förbättra säkerheten genom att agera som en barriär mellan internet och interna resurser. Reverse proxy-servern hanterar också SSL-terminering, lastbalansering och kan bidra till att optimera prestanda genom cachning. Reverse Proxy-konfigurationen är bifogat sista i rapporten.
 
@@ -59,7 +59,7 @@ Efter att applikationsservern var på plats skapades en virtuell maskin som fung
 | **Virtuellt nätverk** | `vnet-webapp-mysql`                                   |
 | **Subnet**            | `reverseproxy-subnet (10.0.3.0/24)`                   |
 
-# Skapande av bastion-host server (VM)
+# Bastion-host server (VM)
 
 Efter att både applikationsservern och reverse proxy-servern var på plats skapades en virtuell maskin som fungerar som bastion-host. Denna server ansvarar för att ge säker fjärråtkomst till resurser i det privata nätverket, utan att exponera dem direkt mot internet. Bastion-host fungerar som en säker gateway för administration, och minskar risken för obehörig åtkomst genom att centralisera och skydda anslutningarna.
 
