@@ -75,7 +75,7 @@ Efter att applikationsservern var på plats skapades en virtuell maskin som fung
 | **Virtuellt nätverk** | `vnet-webapp-mysql`                                   |
 | **Subnet**            | `reverseproxy-subnet (10.0.3.0/24)`                   |
 
-## 🔄 Reverse Proxy-server
+## 🖥️ Reverse Proxy-server
 
 **Operativsystem**: Ubuntu 24.04 LTS
 - Tar emot och hanterar alla inkommande HTTP/HTTPS-förfrågningar
@@ -98,7 +98,7 @@ Efter att både applikationsservern och reverse proxy-servern var på plats skap
 | **Virtuellt nätverk** | `vnet-webapp-mysql`                                   |
 | **Subnet**            | `bastion-subnet (10.0.4.0/24)`                        |
 
-## 🔐 Bastion Host (Säker SSH-access)
+## 🖥️ Bastion Host (Säker SSH-access)
 
 - Ger säker fjärråtkomst till resurser i det privata nätverket
 - Fungerar som en säker gateway för SSH-anslutningar till interna servrar
