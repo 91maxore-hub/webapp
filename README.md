@@ -898,6 +898,7 @@ main {
 ## 📄 Reverse Proxy-konfiguration
 '/etc/nginx/sites-available/default' är Nginx-konfigurationsfilen som används för att ställa in reverse proxy på din server. Den definierar hur inkommande HTTP-förfrågningar tas emot och vidarebefordras till backend-applikationer eller servrar, vilket gör att Nginx agerar som en mellanhand som hanterar trafik och säkerställer smidig kommunikation mellan klient och applikation.
 
+```bash
 server {
   server_name wavvy.se www.wavvy.se;  # <-- Sätt din domän här
 
