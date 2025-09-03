@@ -173,16 +173,9 @@ Cloud-init: Automatiserad serverkonfiguration
 
 Det här är en `cloud-config`-fil som automatiserar installationen av en LEMP-stack (Linux, Nginx, MySQL, PHP) på en Ubuntu-server – anpassad för att ansluta till Azure MySQL.
 
-## 🧩 Funktioner
-
-- Installerar PHP 8.1 och Nginx
-- Konfigurerar Nginx för att köra PHP
-- Inkluderar en `/health`-endpoint
-- Startar och aktiverar relevanta tjänster
-
 ## 📄 cloud-config.yaml
 
-```yaml
+yaml
 #cloud-config
 # Application server with LEMP stack for Azure MySQL connectivity
 
