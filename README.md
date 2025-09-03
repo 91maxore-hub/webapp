@@ -1,4 +1,4 @@
-# 🌐 Webbapplikation med End-to-End Säkerhet och CI/CD Automation
+# 🌐 Modern Webapp med Bastionhost, Reverse Proxy och Automatiserad CI/CD
 
 Detta är en enkel men robust webbapplikation som visar mitt namn och inkluderar ett kontaktformulär för användarinteraktion. Applikationen är hostad på en Ubuntu-baserad virtuell server i Azure och skyddas av en bastionhost för säker fjärråtkomst. En reverse proxy används för att hantera och dirigera inkommande trafik, vilket förbättrar både prestanda och säkerhet. Data från kontaktformuläret lagras tryggt i Azure Blob Storage.
 
