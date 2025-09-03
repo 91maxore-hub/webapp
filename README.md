@@ -177,9 +177,9 @@ Deploymentprocessen är automatiserad via en CI/CD-pipeline som säkerställer s
 
 ## ☁️ Azure Blob Storage
 
-- Lagrar formulärdata och filer från webbapplikationen
+- Lagrar formulärdata och bifogade filer från webbapplikationen
 - Separat lagring utanför applikationsservern för bättre skalbarhet och säkerhet
-- Hanteras via API-anrop från applikationen
+- Åtkomst sker via API-anrop från applikationen
 
 ## 🔐 Säkerhet
 
