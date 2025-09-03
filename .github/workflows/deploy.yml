@@ -1,29 +1,26 @@
-name: Deploy via Bastion
+name: Deploy static site with git pull via bastion
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-    - name: Setup SSH keys
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.BASTION_PRIVATE_KEY }}" > ~/.ssh/id_bastion
-        echo "${{ secrets.APP_SERVER_PRIVATE_KEY }}" > ~/.ssh/id_app
-        chmod 600 ~/.ssh/id_bastion ~/.ssh/id_app
+      - name: Add SSH key
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-        printf "Host bastion\n  HostName ${{ secrets.BASTION_IP }}\n  User ${{ secrets.BASTION_USERNAME }}\n  IdentityFile ~/.ssh/id_bastion\n  StrictHostKeyChecking no\n\nHost webserver\n  HostName ${{ secrets.APP_SERVER_IP }}\n  User ${{ secrets.APP_SERVER_USERNAME }}\n  IdentityFile ~/.ssh/id_app\n  ProxyJump bastion\n  StrictHostKeyChecking no\n" > ~/.ssh/config
-        chmod 600 ~/.ssh/config
-
-    - name: Deploy to webserver
-      run: |
-        ssh webserver << 'EOF'
-          cd /var/www/html
-          git pull origin main
-          sudo systemctl reload nginx
-        EOF
+      - name: Git pull on remote server via bastion
+        run: |
+          ssh -o StrictHostKeyChecking=no -o ProxyJump=${{ secrets.BASTION_USER }}@${{ secrets.BASTION_HOST }} ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }} << 'EOF'
+            cd /var/www/myapp
+            git pull origin main
+          EOF
