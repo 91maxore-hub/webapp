@@ -69,12 +69,12 @@ För att bygga webbapplikationen skapades ett antal viktiga filer, vilka utgör 
 | --------------------- | ---------------------------------------------------------------------------------------------------- |
 | `database_setup.php`  | Skript för att skapa och konfigurera databastabeller som används av applikationen.                   |
 | `index.html`          | Startsidan för webbapplikationen som visar användarens namn och grundläggande information.           |
-| `contact_form.html`   | HTML-formulär där användare kan skicka in kontaktmeddelanden eller annan information.                |
+| `contact_form.html`   | HTML-formulär där användare kan skicka in kontaktmeddelanden.                                        |
 | `on_post_contact.php` | Backend-skript som hanterar formulärdata (POST) från `contact_form.html` och sparar det i databasen. |
 | `on_get_messages.php` | Backend-skript som hämtar och returnerar sparade meddelanden från databasen (GET).                   |
 | `style.css`           | CSS-fil som innehåller stilmallarna för webbapplikationens visuella utseende.                        |
 
-Sammanfattning
+**Sammanfattning**
 
 Tillsammans utgör dessa filer en komplett webbapplikation med både frontend och backend som möjliggör insamling, lagring och visning av användarinmatad data, samtidigt som användarupplevelsen förstärks med en separat stilfil.
 
