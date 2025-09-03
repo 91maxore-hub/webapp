@@ -52,6 +52,13 @@ Efter att nätverksinfrastrukturen var på plats skapades en virtuell maskin som
 
 För automatiserad installation och konfiguration av programvaran användes en cloud-init-fil. Denna fil ser till att alla nödvändiga komponenter för applikationsdrift installeras och konfigureras vid uppstart.
 
+## 🖥️ Applikationsserver (Appserver)
+
+- **Operativsystem:** Ubuntu 24.04 LTS
+- Kör webbapplikationen (PHP, MySQL-anslutningar etc.)
+- Hanterar logik och databasinteraktion
+- Mottar trafik från reverse proxy-servern
+
 # Reverse proxy-server (VM)
 
 Efter att applikationsservern var på plats skapades en virtuell maskin som fungerar som reverse proxy-server. Denna server ansvarar för att ta emot och hantera alla inkommande HTTP/HTTPS-förfrågningar, vidarebefordra dem till backend-webbservern, samt förbättra säkerheten genom att agera som en barriär mellan internet och interna resurser. Reverse proxy-servern hanterar också SSL-terminering, lastbalansering och kan bidra till att optimera prestanda genom cachning. Reverse Proxy-konfigurationen är bifogat sista i rapporten.
