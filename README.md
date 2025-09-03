@@ -272,6 +272,8 @@ runcmd:
 
   ## 📄 php-file.php
 
+  '''php
+
   <?php
 // Azure MySQL Database configuration
 // Replace with your actual Azure MySQL server details
