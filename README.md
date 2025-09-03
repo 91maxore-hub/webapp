@@ -48,6 +48,16 @@ En enkel men komplett webbapplikation som visar mitt namn och innehåller ett ko
 - ✅ SSH-nycklar hanteras säkert via GitHub Secrets
 - ✅ Automatisk uppdatering av serverns known_hosts via pipeline
 
+## 🔐 Hantering av SSH-nycklar
+
+För att möjliggöra säker och automatiserad deployment från GitHub Actions till webbservern används SSH-nyckelbaserad autentisering:
+- Ett nyckelpar (privat + publik) genereras på utvecklarens maskin eller i GitHub.
+- Den privata nyckeln (id_rsa) läggs till som en GitHub Secret i repositoryt (SSH_PRIVATE_KEY)
+- Den publika nyckeln (id_rsa.pub) läggs till i filen ~/.ssh/authorized_keys på:
+  - Bastion Host
+  - Appservern
+GitHub Actions använder sedan nyckeln för att ansluta till servern via SSH och köra deployment-kommandon (t.ex. git pull)
+
 ## 🔄 CI/CD Pipeline
 
 - GitHub Actions används för automatisk deployment
