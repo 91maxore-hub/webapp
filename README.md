@@ -46,7 +46,7 @@ En enkel men komplett webbapplikation som visar mitt namn och innehåller ett ko
 - Operativsystem: Ubuntu 24.04 LTS
 - Webbserver: NGINX
 - Hanterar inkommande trafik och skyddar backend-servrar
-- Terminerar HTTPS-anslutningar (SSL-certifikat via Let's Encrypt eller annan leverantör)
+- Terminerar HTTPS-anslutningar (SSL-certifikat via Let's Encrypt)
 - Proxyar trafiken vidare till appservern på interna IP-adresser
 - Förbättrar säkerheten genom att begränsa direkt åtkomst till applikationsservern
 
