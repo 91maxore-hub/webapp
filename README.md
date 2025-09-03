@@ -32,9 +32,9 @@ En enkel men komplett webbapplikation som visar mitt namn och innehåller ett ko
 
 └── style.css
 
-## ️ Infrastruktur & Deployment
+## ☁️ Infrastruktur & Deployment
 
-🖥️ Applikationsserver (Appserver)
+## 🖥️ Applikationsserver (Appserver)
 
 - Operativsystem: Ubuntu 24.04 LTS
 Funktion:
@@ -42,7 +42,7 @@ Funktion:
 - Hanterar logik och databasinteraktion
 - Mottar trafik från reverse proxy-servern
 
- 🔄 Reverse Proxy Server
+## 🔄 Reverse Proxy Server
 
 - Operativsystem: Ubuntu 24.04 LTS
 - Webbserver: NGINX
@@ -52,7 +52,7 @@ Funktion:
 - Proxyar trafiken vidare till appservern på interna IP-adresser
 - Förbättrar säkerheten genom att begränsa direkt åtkomst till applikationsservern
 
- 🔐 Bastion Host (Säker SSH-access)
+## 🔐 Bastion Host (Säker SSH-access)
 
 - Operativsystem: Ubuntu 24.04 LTS
 Funktion:
@@ -60,7 +60,7 @@ Funktion:
 - Används som hopppunkt (ProxyJump) vid fjärråtkomst och i CI/CD pipelines
 - Begränsar åtkomst och ökar säkerheten vid serverhantering
 
-☁️ Azure Blob Storage
+## ☁️ Azure Blob Storage
 
 Funktion:
 - Lagrar formulärdata och filer från webbapplikationen
