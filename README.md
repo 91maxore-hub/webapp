@@ -209,6 +209,8 @@ Det här är en `cloud-config`-fil som automatiserar installationen av en LEMP-s
 
 ## 📄 cloud-config.yaml
 
+## 📄 cloud-config.yaml
+
 ```yaml
 #cloud-config
 # Application server with LEMP stack for Azure MySQL connectivity
@@ -269,9 +271,6 @@ runcmd:
   - systemctl restart php8.1-fpm
   - systemctl enable php8.1-fpm
 
-
-  📄 Bilaga 1: database_setup.php
-
   <?php
 // Azure MySQL Database configuration
 // Replace with your actual Azure MySQL server details
@@ -306,3 +305,4 @@ try {
     die("Database connection failed. Please check configuration. Error: " . $e->getMessage());
 }
 ?>
+
