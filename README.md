@@ -153,6 +153,12 @@ Tillsammans utgör dessa filer en komplett webbapplikation med både frontend oc
 
 ---
 
+# ☁️ Infrastruktur, Säkerhet & Deployment
+
+Denna webbapplikation är byggd med fokus på säkerhet, skalbarhet och effektiv hantering av driftsättningar. Infrastrukturmiljön består av flera virtuella servrar i Azure, där en dedikerad bastionhost möjliggör säker fjärråtkomst, och en reverse proxy hanterar inkommande trafik för att optimera prestanda och skydd. Applikationen körs på en separat virtuell server som är isolerad för att garantera stabilitet och säkerhet.
+
+Deploymentprocessen är automatiserad via en CI/CD-pipeline som säkerställer snabba, pålitliga och reproducerbara leveranser till produktionsmiljön. Detta möjliggör kontinuerliga uppdateringar av applikationen utan driftstopp och med hög kvalitet i varje release.
+
 ## 📁 Mappstruktur
 
 /webapp
@@ -168,12 +174,6 @@ Tillsammans utgör dessa filer en komplett webbapplikation med både frontend oc
 ├── on_post_contact.php
 
 └── style.css
-
-# ☁️ Infrastruktur & Deployment
-
-Denna webbapplikation är byggd med fokus på säkerhet, skalbarhet och effektiv hantering av driftsättningar. Infrastrukturmiljön består av flera virtuella servrar i Azure, där en dedikerad bastionhost möjliggör säker fjärråtkomst, och en reverse proxy hanterar inkommande trafik för att optimera prestanda och skydd. Applikationen körs på en separat virtuell server som är isolerad för att garantera stabilitet och säkerhet.
-
-Deploymentprocessen är automatiserad via en CI/CD-pipeline som säkerställer snabba, pålitliga och reproducerbara leveranser till produktionsmiljön. Detta möjliggör kontinuerliga uppdateringar av applikationen utan driftstopp och med hög kvalitet i varje release.
 
 
 ## 🖥️ Applikationsserver (Appserver)
