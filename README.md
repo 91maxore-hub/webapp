@@ -272,6 +272,7 @@ runcmd:
 ```
 
   ## 📄 database_setup.php
+  Denna fil ansluter till Azure MySQL med säker SSL-anslutning och skapar tabellen contacts om den inte redan finns. Den används för att konfigurera databasen som webbapplikationen behöver.
 
 ```php
 <?php
@@ -312,6 +313,7 @@ try {
 ``` 
 
 ## 📄 index.html
+Startsidan för webbapplikationen som presenterar kontaktappens syfte och arkitektur. Den innehåller navigering till formulär och meddelandelista samt ger en översikt över tekniska funktioner.
 
 ```html
 <!-- CI/CD Pipeline -->
@@ -357,6 +359,7 @@ try {
 </html>
 ```
 ## 📄 contact_form.html
+En webbsida med ett kontaktformulär där användare kan skicka namn, e-post och meddelande. Formuläret skickar data till servern för vidare hantering.
 
 ```html
 <!-- CI/CD Pipeline -->
@@ -406,6 +409,7 @@ try {
 ```
 
 ## 📄 on_post_contact.php
+Denna fil tar emot och bearbetar data från kontaktformuläret. Den validerar inmatningen och sparar meddelandet i Azure MySQL-databasen samt lagrar en kopia i Azure Blob Storage.
 
 ```php
 <?php
@@ -513,6 +517,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ```
 
 ## 📄 on_get_messages.php
+Denna fil hämtar och visar alla inskickade kontaktmeddelanden från Azure MySQL-databasen.
 
 ```php
 <?php
@@ -588,6 +593,7 @@ try {
 ```
 
 ## 📄 style.css
+Denna fil innehåller enkel och ren styling för webbapplikationen, inklusive layout, färger, knappar, formulär och responsiv design för bättre användarupplevelse på olika enheter.
 
 ```css
 /* 🌐 Modern CSS for Contact Webapp - CI/CD Pipeline Ready */
