@@ -179,16 +179,19 @@ Tillsammans utgör dessa filer en komplett webbapplikation med både frontend oc
 
 ## 🔒 Network Security Groups (NSG)
 
-| **NSG-namn**          | **Tillämpat på**      | **Port(ar)**           | **Användning / Syfte**                                                                                                                                      |
-| --------------------- | --------------------- | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `nsg-db-subnet`       | Databassubnet         | 3306 (MySQL)           | Tillåter MySQL-trafik från applikationsserverns subnet **10.0.1.0/24** till databasen                                                                       |
-| `vm-bastionhost-nsg`  | Bastion Host VM       | 22 (SSH)               | Tillåter SSH-åtkomst till bastionhost                                                                                                                       |
-| `vm-reverseproxy-nsg` | Reverse Proxy VM      | 80 (HTTP), 443 (HTTPS) | Tillåter kontrollerad HTTP/HTTPS-trafik från internet till reverse proxy för att säkert exponera webbapplikationer                                          |
-| `webapp-nsg`          | Applikationsserver VM | 80 (HTTP), 22 (SSH)    | Tillåter endast HTTP/HTTPS-trafik till resurser i **`ReverseProxyASG`** och SSH-trafik till resurser i **`BastionHostASG`**, riktat mot applikationsservern |
+| **NSG-namn**          | **Tillämpat på**      | **Port(ar)**           | **Användning / Syfte**                                                                                                                                                                                                                 |
+| --------------------- | --------------------- | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `nsg-db-subnet`       | Databassubnet         | 3306 (MySQL)           | Tillåter MySQL-trafik från webbapplikationens subnet **10.0.1.0/24** till databasen                                                                                                                                                    |
+| `vm-bastionhost-nsg`  | Bastion Host VM       | 22 (SSH)               | Tillåter SSH-åtkomst till bastionhost                                                                                                                                                                                                  |
+| `vm-reverseproxy-nsg` | Reverse Proxy VM      | 80 (HTTP), 443 (HTTPS) | Tillåter kontrollerad HTTP/HTTPS-trafik från internet till reverse proxy för att säkert exponera webbapplikationen                                                                                                                     |
+| `webapp-nsg`          | Applikationsserver VM | 80 (HTTP), 22 (SSH)    | ASG\:erna `ReverseProxyASG` (HTTP/HTTPS) och `BastionHostASG` (SSH) används som destination i NSG-regler för att tillåta trafik från reverse proxyn respektive bastionhost till webbapplikationen, som inte är exponerad mot internet. |
 
+## 🔒 Application Security Groups (ASG)
 
-
-## Application Security Groups (ASG)
+| **ASG-namn**      | **Tillämpat på** | **Användning / Syfte**                                                                                               |
+| ----------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `ReverseProxyASG` | Reverse Proxy VM | Används som **destination** i NSG-regel för att tillåta HTTP/HTTPS-trafik till webbapplikationen från reverse proxyn |
+| `BastionHostASG`  | Bastion Host VM  | Används som **destination** i NSG-regel för att tillåta SSH-trafik till webbapplikationen från bastionhost           |
 
 
 ## 🔐 Hantering av SSH-nycklar
