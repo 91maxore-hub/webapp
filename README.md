@@ -43,7 +43,7 @@ En enkel men komplett webbapplikation som visar mitt namn och innehåller ett ko
 
 ## 🔄 Reverse Proxy Server
 
-- **Operativsystem**:** Ubuntu 24.04 LTS
+- **Operativsystem**: Ubuntu 24.04 LTS
 - **Webbserver:** NGINX
 - Hanterar inkommande trafik och skyddar backend-servrar
 - Terminerar HTTPS-anslutningar (SSL-certifikat via Let's Encrypt)
