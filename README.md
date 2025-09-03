@@ -54,7 +54,7 @@ För automatiserad installation och konfiguration av programvaran användes en c
 
 ## 🖥️ Applikationsserver (Appserver)
 
-- **Operativsystem:** Ubuntu 24.04 LTS
+**Operativsystem:** Ubuntu 24.04 LTS
 - Kör webbapplikationen (PHP, MySQL-anslutningar etc.)
 - Ansvarar för kommunikation med databasen (MySQL)
 - Tar emot och behandlar trafik från reverse proxy-servern
