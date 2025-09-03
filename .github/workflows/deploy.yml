@@ -21,6 +21,6 @@ jobs:
       - name: Git pull on remote server via bastion
         run: |
           ssh -o StrictHostKeyChecking=no -o ProxyJump=${{ secrets.BASTION_USER }}@${{ secrets.BASTION_HOST }} ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }} << 'EOF'
-            cd /var/www/myapp
+            cd /var/www/html
             git pull origin main
           EOF
