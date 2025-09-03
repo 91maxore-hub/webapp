@@ -203,7 +203,7 @@ Applikationen använder en CI/CD-pipeline (Continuous Integration & Continuous D
 
 Cloud-init: Automatiserad serverkonfiguration
 
-# Bilagor till koder somm tillhör webbapplikationen
+# Bilagor till koder som tillhör webbapplikationen
 
 Här hittar du samlade kodbilagor och konfigurationsfiler som hör till webbapplikationen. Dessa filer utgör viktiga delar av applikationens backend och servermiljö, och visar bland annat hur servern är uppsatt, hur databasen ansluts samt hur applikationen hanterar data.
 
