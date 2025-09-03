@@ -36,15 +36,15 @@ En enkel men komplett webbapplikation som visar mitt namn och innehåller ett ko
 
 ## 🖥️ Applikationsserver (Appserver)
 
-- Operativsystem: Ubuntu 24.04 LTS
+- **Operativsystem:** Ubuntu 24.04 LTS
 - Kör webbapplikationen (PHP, MySQL-anslutningar etc.)
 - Hanterar logik och databasinteraktion
 - Mottar trafik från reverse proxy-servern
 
 ## 🔄 Reverse Proxy Server
 
-- Operativsystem: Ubuntu 24.04 LTS
-- Webbserver: NGINX
+- **Operativsystem**:** Ubuntu 24.04 LTS
+- **Webbserver:** NGINX
 - Hanterar inkommande trafik och skyddar backend-servrar
 - Terminerar HTTPS-anslutningar (SSL-certifikat via Let's Encrypt)
 - Proxyar trafiken vidare till appservern på interna IP-adresser
@@ -52,7 +52,7 @@ En enkel men komplett webbapplikation som visar mitt namn och innehåller ett ko
 
 ## 🔐 Bastion Host (Säker SSH-access)
 
-- Operativsystem: Ubuntu 24.04 LTS
+- **Operativsystem:** Ubuntu 24.04 LTS
 - Säker gateway för SSH-anslutningar till interna servrar
 - Används som hopppunkt (ProxyJump) vid fjärråtkomst och i CI/CD pipelines
 - Begränsar åtkomst och ökar säkerheten vid serverhantering
