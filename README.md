@@ -267,10 +267,10 @@ runcmd:
   - systemctl restart nginx
   - systemctl enable nginx
   - systemctl restart php8.1-fpm
-  - systemctl enable php8.1-fpm´
-```yaml
+  - systemctl enable php8.1-fpm
+```
 
-  📄 php-file.php
+  ## 📄 php-file.php
 
   <?php
 // Azure MySQL Database configuration
