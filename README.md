@@ -207,7 +207,7 @@ Cloud-init: Automatiserad serverkonfiguration
 
 Här hittar du samlade kodbilagor och konfigurationsfiler som hör till webbapplikationen. Dessa filer utgör viktiga delar av applikationens backend och servermiljö, och visar bland annat hur servern är uppsatt, hur databasen ansluts samt hur applikationen hanterar data.
 
-## 📄 cloud-config.yaml
+## 📄 cloud-config.yaml - Denna fil används för att automatisera installationen och konfigureringen av LEMP-stacken (Linux, Nginx, MySQL-klient, PHP) på applikationsservern. Genom att använda denna cloud-config säkerställs att servern är korrekt förberedd med alla nödvändiga komponenter för att köra webbapplikationen.
 
 ```yaml
 #cloud-config
