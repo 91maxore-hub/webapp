@@ -194,6 +194,19 @@ Tillsammans utgör dessa filer en komplett webbapplikation med både frontend oc
 | `BastionHostASG`  | Bastion Host VM  | Används som **destination** i NSG-regel för att tillåta SSH-trafik till webbapplikationen från bastionhost           |
 
 
+## 🔐 GitHub Secrets
+
+Nedan visas en översikt över de miljövariabler och hemligheter som används för att ansluta till bastionhost och applikationsservern. Värdena inkluderar både publika och interna IP-adresser, användarnamn samt referens till den privata SSH-nyckeln.
+
+| **Namn**          | **Värde**                           | **Beskrivning**                     |
+| ----------------- | ----------------------------------- | ----------------------------------- |
+| `BASTION_HOST`    | `74.234.34.18`                      | Publik IP till bastionhost          |
+| `BASTION_USER`    | `azureuser`                         | Användare för bastionhost           |
+| `SSH_PRIVATE_KEY` | privat SSH-nyckel (`~/.ssh/id_rsa`) | Privat SSH-nyckel för autentisering |
+| `VM_HOST`         | `10.0.1.4`                          | Intern IP till applikationsserver   |
+| `VM_USER`         | `azureuser`                         | Användare för applikationsserver    |
+
+
 ## 🔐 Hantering av SSH-nycklar
 
 För att möjliggöra säker och automatiserad deployment från GitHub Actions till webbservern används SSH-nyckelbaserad autentisering:
