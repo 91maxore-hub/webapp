@@ -34,12 +34,38 @@ En enkel men komplett webbapplikation som visar mitt namn och innehåller ett ko
 
 ## ☁️ Infrastruktur & Deployment
 
-🖥️ Värdmiljö (Ubuntu-server i Azure)
+## 🖥️ Applikationsserver (Appserver)
+
+- Operativsystem: Ubuntu 24.04 LTS
+Funktion:
+- Kör webbapplikationen (PHP, MySQL-anslutningar etc.)
+- Hanterar logik och databasinteraktion
+- Mottar trafik från reverse proxy-servern
+
+## 🔄 Reverse Proxy Server
+
 - Operativsystem: Ubuntu 24.04 LTS
 - Webbserver: NGINX
-- Reverse proxy skyddar applikationen från direkt åtkomst
-- Bastion host används för säker SSH-anslutning
-- Azure Blob Storage används för att lagra formulärdata
+Funktion:
+- Hanterar inkommande trafik och skyddar backend-servrar
+- Terminerar HTTPS-anslutningar (SSL-certifikat via Let's Encrypt eller annan leverantör)
+- Proxyar trafiken vidare till appservern på interna IP-adresser
+- Förbättrar säkerheten genom att begränsa direkt åtkomst till applikationsservern
+
+## 🔐 Bastion Host (Säker SSH-access)
+
+- Operativsystem: Ubuntu 24.04 LTS
+Funktion:
+- Säker gateway för SSH-anslutningar till interna servrar
+- Används som hopppunkt (ProxyJump) vid fjärråtkomst och i CI/CD pipelines
+- Begränsar åtkomst och ökar säkerheten vid serverhantering
+
+## ☁️ Azure Blob Storage
+
+Funktion:
+- Lagrar formulärdata och filer från webbapplikationen
+- Separat lagring utanför applikationsservern för bättre skalbarhet och säkerhet
+- Hanteras via API-anrop från applikationen
 
 ## 🔐 Säkerhet
 
