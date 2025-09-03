@@ -893,3 +893,44 @@ main {
     font-size: 0.9rem;
   }
 }
+```
+
+## 📄 Reverse Proxy-konfiguration
+'/etc/nginx/sites-available/default' är Nginx-konfigurationsfilen som används för att ställa in reverse proxy på din server. Den definierar hur inkommande HTTP-förfrågningar tas emot och vidarebefordras till backend-applikationer eller servrar, vilket gör att Nginx agerar som en mellanhand som hanterar trafik och säkerställer smidig kommunikation mellan klient och applikation.
+
+server {
+  server_name wavvy.se www.wavvy.se;  # <-- Sätt din domän här
+
+  location / {
+    proxy_pass         http://10.0.1.4:80/;
+    proxy_http_version 1.1;
+
+    proxy_set_header   Upgrade $http_upgrade;
+    proxy_set_header   Connection "upgrade";
+    proxy_set_header   Host $host;
+    proxy_cache_bypass $http_upgrade;
+
+    proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header   X-Forwarded-Proto $scheme;
+  }
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/wavvy.se/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/wavvy.se/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+
+server {
+    if ($host = wavvy.se) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+  listen 80 default_server;
+  server_name wavvy.se www.wavvy.se;
+    return 404; # managed by Certbot
+
+
+}
