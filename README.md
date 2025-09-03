@@ -177,6 +177,20 @@ Tillsammans utgör dessa filer en komplett webbapplikation med både frontend oc
 - ✅ SSH-nycklar hanteras säkert via GitHub Secrets
 - ✅ Automatisk uppdatering av serverns known_hosts via pipeline
 
+## 🔒 Network Security Groups (NSG)
+
+| **NSG-namn**          | **Tillämpat på**      | **Port(ar)**           | **Användning / Syfte**                                                                                                                                      |
+| --------------------- | --------------------- | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `nsg-db-subnet`       | Databassubnet         | 3306 (MySQL)           | Tillåter MySQL-trafik från applikationsserverns subnet **10.0.1.0/24** till databasen                                                                       |
+| `vm-bastionhost-nsg`  | Bastion Host VM       | 22 (SSH)               | Tillåter SSH-åtkomst till bastionhost                                                                                                                       |
+| `vm-reverseproxy-nsg` | Reverse Proxy VM      | 80 (HTTP), 443 (HTTPS) | Tillåter kontrollerad HTTP/HTTPS-trafik från internet till reverse proxy för att säkert exponera webbapplikationer                                          |
+| `webapp-nsg`          | Applikationsserver VM | 80 (HTTP), 22 (SSH)    | Tillåter endast HTTP/HTTPS-trafik till resurser i **`ReverseProxyASG`** och SSH-trafik till resurser i **`BastionHostASG`**, riktat mot applikationsservern |
+
+
+
+## Application Security Groups (ASG)
+
+
 ## 🔐 Hantering av SSH-nycklar
 
 För att möjliggöra säker och automatiserad deployment från GitHub Actions till webbservern används SSH-nyckelbaserad autentisering:
