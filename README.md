@@ -19,12 +19,12 @@ En enkel men komplett webbapplikation som visar mitt namn och innehåller ett ko
 ## 📁 Mappstruktur
 
 /webapp
-├── contact_form.html # Kontaktformulär
-├── database_setup.php # Initierar databas och blob-storage
-├── index.html # Startsida med mitt namn
-├── on_get_messages.php # Hämtar meddelanden
-├── on_post_contact.php # Tar emot formulärdata
-└── style.css # CSS-stil
+- contact_form.html        (Kontaktformulär)
+- database_setup.php       (Initierar databas och blob-storage)
+- index.html               (Startsida med mitt namn)
+- on_get_messages.php      (Hämtar meddelanden)
+- on_post_contact.php      (Tar emot formulärdata)
+- style.css                (CSS-stil)
 
 ## ☁️ Infrastruktur & Deployment
 
