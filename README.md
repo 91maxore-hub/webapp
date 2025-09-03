@@ -509,3 +509,349 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 </body>
 </html>
+```
+
+## 📄 on_get_messages.php
+
+```php
+<?php
+// CI/CD Pipeline
+// Handle GET request to display all contact messages
+require_once 'database_setup.php';
+
+try {
+    $stmt = $pdo->prepare("SELECT id, name, email, message, created_at FROM contacts ORDER BY created_at DESC");
+    $stmt->execute();
+    $messages = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch(PDOException $e) {
+    $error = "Error retrieving messages: " . $e->getMessage();
+    $messages = [];
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Messages - Azure MySQL Contact App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📋 All Messages</h1>
+        </header>
+
+        <nav>
+            <a href="index.html" class="btn">Home</a>
+            <a href="contact_form.html" class="btn">Contact Form</a>
+            <a href="on_get_messages.php" class="btn active">View Messages</a>
+        </nav>
+
+        <main>
+            <?php if (isset($error)): ?>
+                <div class="error-message">
+                    <h2>❌ Error</h2>
+                    <p><?php echo htmlspecialchars($error); ?></p>
+                </div>
+            <?php elseif (empty($messages)): ?>
+                <div class="info-message">
+                    <h2>📭 No Messages Yet</h2>
+                    <p>No messages have been submitted yet.</p>
+                    <a href="contact_form.html" class="btn">Send First Message</a>
+                </div>
+            <?php else: ?>
+                <div class="messages-count">
+                    <p>Total messages: <strong><?php echo count($messages); ?></strong></p>
+                </div>
+
+                <div class="messages-list">
+                    <?php foreach ($messages as $message): ?>
+                        <div class="message-item">
+                            <div class="message-header">
+                                <h3><?php echo htmlspecialchars($message['name']); ?></h3>
+                                <span class="message-date"><?php echo htmlspecialchars($message['created_at']); ?></span>
+                            </div>
+                            <p class="message-email">📧 <?php echo htmlspecialchars($message['email']); ?></p>
+                            <div class="message-content">
+                                <p><?php echo nl2br(htmlspecialchars($message['message'])); ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        </main>
+    </div>
+</body>
+</html>
+```
+
+## 📄 style.css
+
+```css
+/* 🌐 Modern CSS for Contact Webapp - CI/CD Pipeline Ready */
+
+/* Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f7fa;
+  color: #333;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 2rem;
+  background-color: #fff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  min-height: 100vh;
+}
+
+/* Header */
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 1.5rem;
+}
+
+header h1 {
+  color: #2c3e50;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+header p {
+  color: #7f8c8d;
+  font-size: 1.1rem;
+}
+
+/* Navigation */
+nav {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  margin: 0.3rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  background-color: #3498db;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #2980b9;
+}
+
+.btn.active {
+  background-color: #2c3e50;
+}
+
+.btn.submit-btn {
+  background-color: #27ae60;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.btn.submit-btn:hover {
+  background-color: #219150;
+}
+
+/* Main Content */
+main {
+  margin-bottom: 2rem;
+}
+
+/* Features Section */
+.features {
+  background-color: #ecf0f1;
+  padding: 1.5rem;
+  border-radius: 6px;
+  margin-top: 1.5rem;
+}
+
+.features h3 {
+  color: #2c3e50;
+  margin-bottom: 0.75rem;
+}
+
+.features ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.features li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.features li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #27ae60;
+  font-weight: bold;
+}
+
+/* Contact Form */
+.contact-form {
+  background-color: #f8f9fa;
+  padding: 2rem;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #3498db;
+  outline: none;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+}
+
+/* System Messages */
+.success-message,
+.error-message,
+.info-message {
+  padding: 1rem;
+  margin: 1.5rem 0;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.info-message {
+  background-color: #d1ecf1;
+  color: #0c5460;
+  border: 1px solid #bee5eb;
+}
+
+.actions {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+/* Message List */
+.messages-count {
+  background-color: #e8f4fd;
+  padding: 0.75rem;
+  border-radius: 5px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+.messages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.message-item {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1.25rem;
+}
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+.message-header h3 {
+  color: #2c3e50;
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.message-date {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+}
+
+.message-email {
+  color: #3498db;
+  margin-bottom: 0.5rem;
+}
+
+.message-content {
+  color: #555;
+}
+
+.message-content p {
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .message-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .message-date {
+    margin-top: 0.5rem;
+  }
+
+  .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+}
