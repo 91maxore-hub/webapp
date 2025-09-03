@@ -32,7 +32,7 @@ En enkel men komplett webbapplikation som visar mitt namn och innehåller ett ko
 
 └── style.css
 
-## ☁️ Infrastruktur & Deployment
+☁️ Infrastruktur & Deployment
 
 ## 🖥️ Applikationsserver (Appserver)
 
