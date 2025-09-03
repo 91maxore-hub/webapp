@@ -268,9 +268,8 @@ runcmd:
   - systemctl enable nginx
   - systemctl restart php8.1-fpm
   - systemctl enable php8.1-fpm´
+```yaml
 
-  ---
-  
   📄 php-file.php
 
   <?php
