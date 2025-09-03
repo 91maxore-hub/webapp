@@ -270,13 +270,13 @@ runcmd:
   - systemctl enable php8.1-fpm
 ```
 
-  ## 📄 php-file.php
+  ## 📄 database_setup.php
 
 ```php
 <?php
 // Azure MySQL Database configuration
 // Replace with your actual Azure MySQL server details
-$host = getenv('MYSQL_HOST') ?: '[YOUR-MYSQL-SERVER-NAME].mysql.database.azure.com';
+$host = getenv('MYSQL_HOST') ?: 'mysql-webapp-01.mysql.database.azure.com';
 $dbname = getenv('MYSQL_DATABASE') ?: 'contactforms';
 $username = getenv('MYSQL_USERNAME') ?: 'mysqladmin';
 $password = getenv('MYSQL_PASSWORD') ?: 'SecurePassword123!';
@@ -307,4 +307,48 @@ try {
     die("Database connection failed. Please check configuration. Error: " . $e->getMessage());
 }
 ?>
+``` 
 
+## 📄 database_setup.php
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level 2.3: Azure MySQL Contact App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📝 Azure MySQL Contact App</h1>
+            <p>Level 2.3: LEMP Stack with Azure MySQL Flexible Server</p>
+        </header>
+
+        <nav>
+            <a href="index.html" class="btn">Home</a>
+            <a href="contact_form.html" class="btn">Contact Form</a>
+            <a href="on_get_messages.php" class="btn">View Messages</a>
+        </nav>
+
+        <main>
+            <h2>Welcome!</h2>
+            <p>This is a PHP contact form application running on Azure with secure database connectivity.</p>
+
+            <div class="features">
+                <h3>Architecture Features:</h3>
+                <ul>
+                    <li>Contact form with Azure MySQL database storage</li>
+                    <li>Secure private network connectivity</li>
+                    <li>Azure Database for MySQL Flexible Server</li>
+                    <li>SSL/TLS encrypted database connections</li>
+                    <li>Network Security Group protection</li>
+                    <li>Nginx web server with PHP-FPM</li>
+                </ul>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
