@@ -36,13 +36,47 @@ Efter att nätverksinfrastrukturen var på plats skapades en virtuell maskin som
 | Parameter             | Värde                                                 |
 | --------------------- | ----------------------------------------------------- |
 | **Namn**              | `vm-webapp`                                           |
-| **Region**            | Samma som resursgruppen (`rg-webapp-mysql`)           |
+| **Region**            | North Europe                                          |
 | **Image**             | Ubuntu Server 22.04 LTS – x64 Gen2                    |
 | **Storlek**           | Standard\_B1s (kostnadseffektiv för utbildningssyfte) |
 | **Virtuellt nätverk** | `vnet-webapp-mysql`                                   |
 | **Subnet**            | `app-subnet` (`10.0.1.0/24`)                          |
 
 För automatiserad installation och konfiguration av programvaran användes en cloud-init-fil. Denna fil ser till att alla nödvändiga komponenter för applikationsdrift installeras och konfigureras vid uppstart.
+
+# Databaskonfiguration: Azure Database for MySQL – Flexible Server
+
+För att hantera lagring och hantering av applikationens databas skapades en Azure Database for MySQL – Flexible Server. Denna tjänst är optimerad för utvecklingsmiljöer och erbjuder hög tillgänglighet, automatiska säkerhetskopior samt flexibel resurshantering.
+
+| Parameter                  | Värde                                               |
+| -------------------------- | --------------------------------------------------- |
+| **Servernamn**             | `mysql-webapp-01`                                   |
+| **Region**                 | North Europe                                        |
+| **MySQL-version**          | 5.7                                                 |
+| **Arbetsbelastning**       | Development (optimerad för test och utveckling)     |
+| **Beräkning + lagring**    | Burstable B1ms (1 vCore, 2 GiB RAM), 20 GiB lagring |
+| **Anslutningstyp**         | Privat anslutning via VNet-integration              |
+| **Virtuellt nätverk**      | `vnet-webapp-mysql`                                 |
+| **Subnet**                 | `db-subnet` (`10.0.2.0/24`)                         |
+| **Privat DNS-integration** | Ja                                                  |
+| **Privat DNS-zon**         | `mysql.database.azure.com`                          |
+
+# Applikationsfiler och deras funktion
+
+För att bygga webbapplikationen skapades ett antal viktiga filer, vilka utgör applikationens backend, frontend och stil. Nedan följer en översikt av varje fil och dess syfte:
+
+| Filnamn               | Syfte                                                                                                |
+| --------------------- | ---------------------------------------------------------------------------------------------------- |
+| `database_setup.php`  | Skript för att skapa och konfigurera databastabeller som används av applikationen.                   |
+| `index.html`          | Startsidan för webbapplikationen som visar användarens namn och grundläggande information.           |
+| `contact_form.html`   | HTML-formulär där användare kan skicka in kontaktmeddelanden eller annan information.                |
+| `on_post_contact.php` | Backend-skript som hanterar formulärdata (POST) från `contact_form.html` och sparar det i databasen. |
+| `on_get_messages.php` | Backend-skript som hämtar och returnerar sparade meddelanden från databasen (GET).                   |
+| `style.css`           | CSS-fil som innehåller stilmallarna för webbapplikationens visuella utseende.                        |
+
+Sammanfattning
+
+Tillsammans utgör dessa filer en komplett webbapplikation med både frontend och backend som möjliggör insamling, lagring och visning av användarinmatad data, samtidigt som användarupplevelsen förstärks med en separat stilfil.
 
 ## 🧰 Funktionalitet
 
