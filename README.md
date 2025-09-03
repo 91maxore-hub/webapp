@@ -126,13 +126,13 @@ För att hantera lagring och hantering av applikationens databas skapades en Azu
 
 ## 🖥️ Databasserver (Azure Database for MySQL)
 
-# Applikationsfiler och deras funktion
-
 - Lagrar applikationens strukturerade data (formulärsvar, användarinformation m.m.)
 - Körs som hanterad tjänst för enklare drift och underhåll
 - Ansluts privat via VNet för ökad säkerhet
 - Ger automatisk backup och hög tillgänglighet
 - Optimerad för utvecklingsmiljö med flexibel resursanvändning
+
+# Applikationsfiler och deras funktion
 
 För att bygga webbapplikationen skapades ett antal viktiga filer, vilka utgör applikationens backend, frontend och stil. Nedan följer en översikt av varje fil och dess syfte:
 
