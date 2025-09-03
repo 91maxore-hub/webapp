@@ -27,6 +27,23 @@ Genom att segmentera det virtuella nätverket i dedikerade subnät för olika fu
 - 🔁 **Trafikstyrning och filtrering:** Med ett separat reverseproxy-subnet kan inkommande trafik kontrolleras och filtreras innan den når applikationen. Detta möjliggör implementation av t.ex. brandväggsregler, TLS-terminering och lastbalansering.
 - 👨‍💻 **Säker administration:** Genom att använda en Bastion Host i ett eget bastionhost-subnet undviks behovet av att öppna portar för SSH direkt mot de virtuella maskinerna. All åtkomst sker via Azure Bastion, vilket erbjuder en säker och spårbar inloggningsmetod.
 
+# Skapande av applikationsserver (VM)
+
+Efter att nätverksinfrastrukturen var på plats skapades en virtuell maskin som fungerar som applikationsserver. Denna server är ansvarig för att köra webbapplikationen samt ansluta till databasen via LEMP-stacken (Linux, Nginx, MySQL, PHP).
+
+**Konfiguration av virtuell maskin:**
+
+| Parameter             | Värde                                                 |
+| --------------------- | ----------------------------------------------------- |
+| **Namn**              | `vm-webapp`                                           |
+| **Region**            | Samma som resursgruppen (`rg-webapp-mysql`)           |
+| **Image**             | Ubuntu Server 22.04 LTS – x64 Gen2                    |
+| **Storlek**           | Standard\_B1s (kostnadseffektiv för utbildningssyfte) |
+| **Virtuellt nätverk** | `vnet-webapp-mysql`                                   |
+| **Subnet**            | `app-subnet` (`10.0.1.0/24`)                          |
+
+För automatiserad installation och konfiguration av programvaran användes en cloud-init-fil. Denna fil ser till att alla nödvändiga komponenter för applikationsdrift installeras och konfigureras vid uppstart.
+
 ## 🧰 Funktionalitet
 
 - ✅ Visar startsida (`index.html`)
@@ -149,3 +166,78 @@ Applikationen använder en CI/CD-pipeline (Continuous Integration & Continuous D
 - ProxyJump (bastion host) används för säker åtkomst till interna miljöer
 - Endast privata nycklar används (lösenordsfri autentisering)
 - HTTPS är aktiverat på webbservern via Let's Encrypt och Nginx
+
+Cloud-init: Automatiserad serverkonfiguration
+
+# Application Server Setup (LEMP Stack on Azure)
+
+Det här är en `cloud-config`-fil som automatiserar installationen av en LEMP-stack (Linux, Nginx, MySQL, PHP) på en Ubuntu-server – anpassad för att ansluta till Azure MySQL.
+
+## 🧩 Funktioner
+
+- Installerar PHP 8.1 och Nginx
+- Konfigurerar Nginx för att köra PHP
+- Inkluderar en `/health`-endpoint
+- Startar och aktiverar relevanta tjänster
+
+## 📄 cloud-config.yaml
+
+```yaml
+#cloud-config
+# Application server with LEMP stack for Azure MySQL connectivity
+
+package_update: true
+
+# Add external repositories
+apt:
+  sources:
+    ondrej-php:
+      source: ppa:ondrej/php
+
+packages:
+  - software-properties-common  # Required for adding PPAs
+  - nginx          # Web server
+  - php8.1-fpm     # PHP 8.1 FastCGI Process Manager (specific version)
+  - php8.1-mysql   # PHP 8.1 MySQL extension
+  - php8.1-cli     # PHP 8.1 command line interface
+  - mysql-client   # MySQL client for testing
+  - unzip          # For extracting files
+
+write_files:
+  # Configure Nginx to serve PHP files
+  - path: /etc/nginx/sites-available/default
+    content: |
+      server {
+          listen 80;
+          root /var/www/html;
+          index index.php index.html index.nginx-debian.html;
+
+          server_name _;
+
+          location / {
+              try_files $uri $uri/ =404;
+          }
+
+          location ~ \.php$ {
+              include snippets/fastcgi-php.conf;
+              fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
+          }
+
+          # Health check endpoint
+          location /health {
+              access_log off;
+              return 200 "Application server healthy\n";
+              add_header Content-Type text/plain;
+          }
+      }
+
+runcmd:
+  # Set proper permissions for web directory
+  - chown -R www-data:www-data /var/www/html
+  - chmod -R 755 /var/www/html
+
+  # Restart and enable services
+  - systemctl restart nginx
+  - systemctl enable nginx
+  - systemctl restart php8.1-fpm
+  - systemctl enable php8.1-fpm
