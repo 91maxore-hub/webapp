@@ -35,7 +35,7 @@ Genom att segmentera det virtuella nätverket i dedikerade subnät för olika fu
 - 🔁 **Trafikstyrning och filtrering:** Med ett separat reverseproxy-subnet kan inkommande trafik kontrolleras och filtreras innan den når applikationen. Detta möjliggör implementation av t.ex. brandväggsregler, TLS-terminering och lastbalansering.
 - 👨‍💻 **Säker administration:** Genom att använda en Bastion Host i ett eget bastionhost-subnet undviks behovet av att öppna portar för SSH direkt mot de virtuella maskinerna. All åtkomst sker via Azure Bastion, vilket erbjuder en säker och spårbar inloggningsmetod.
 
-# Aapplikationsserver (VM)
+# Applikationsserver (VM)
 
 Efter att nätverksinfrastrukturen var på plats skapades en virtuell maskin som fungerar som applikationsserver. Denna server är ansvarig för att köra webbapplikationen samt ansluta till databasen via LEMP-stacken (Linux, Nginx, MySQL, PHP).
 
@@ -56,8 +56,9 @@ För automatiserad installation och konfiguration av programvaran användes en c
 
 - **Operativsystem:** Ubuntu 24.04 LTS
 - Kör webbapplikationen (PHP, MySQL-anslutningar etc.)
-- Hanterar logik och databasinteraktion
-- Mottar trafik från reverse proxy-servern
+- Ansvarar för kommunikation med databasen (MySQL)
+- Tar emot och behandlar trafik från reverse proxy-servern
+- Hanterar användarsessioner och autentisering
 
 # Reverse proxy-server (VM)
 
