@@ -1,5 +1,6 @@
 #cloud-config
 # Application server with LEMP stack for Azure MySQL connectivity
+# NEW
 
 package_update: true
 
