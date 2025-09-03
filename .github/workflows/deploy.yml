@@ -1,4 +1,4 @@
-name: Deploy to Azure VM
+name: Deploy static site via Git pull
 
 on:
   push:
@@ -18,11 +18,12 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Deploy to server via Bastion
+      - name: Git pull on remote server via bastion
         run: |
-          ssh -o ProxyJump=${{ secrets.BASTION_USER }}@${{ secrets.BASTION_HOST }} ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }} << 'EOF'
-            cd /var/www/html  # Ändra till din katalog
+          ssh -o StrictHostKeyChecking=no \
+              -o UserKnownHostsFile=/dev/null \
+              -o ProxyJump=${{ secrets.BASTION_USER }}@${{ secrets.BASTION_HOST }} \
+              ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }} << 'EOF'
+            cd /var/www/html
             git pull origin main
-            npm install       # eller annan build-kommandon
-            pm2 restart app   # eller starta om din tjänst
           EOF
