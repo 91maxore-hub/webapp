@@ -81,13 +81,26 @@ Exempel på tillgänglig tjänst:
 https://wavvy.se
 
 
-## 🔄 CI/CD Pipeline
+## 🚀 CI/CD-pipeline med GitHub Actions
 
-- GitHub Actions används för automatisk deployment
-- Pipen körs vid varje push till main
-- Workflow:
-   1. Push triggar GitHub Action
-   2. Action ansluter till webbserver via bastion (SSH ProxyJump)
-   3. Gör git pull på servern i /var/www/html
-   4. Startar om/uppdaterar applikationen
+Applikationen använder en CI/CD-pipeline (Continuous Integration & Continuous Deployment) via GitHub Actions för att automatiskt:
 
+- Bygga och testa kod (vid behov)
+- Ansluta till webbservern via SSH genom en bastion host och reverse proxy
+- Utföra git pull för att hämta senaste versionen av koden till servern
+- Köra eventuella byggsteg (t.ex. npm install, composer install, etc.)
+- Starta om applikationen vid behov (t.ex. med pm2)
+
+## 🛠️ Processflöde
+
+- När en ändring pushas till main-branchen startas arbetsflödet automatiskt.
+- En GitHub Actions-runner sätter upp en säker SSH-anslutning till bastion/reverse proxy.
+- På målsystemet hämtas den senaste koden.
+- Tjänsten startas om så att ändringarna blir synliga direkt.
+
+## 🔐 Säkerhet i pipelinen
+
+- SSH-nycklar hanteras säkert via GitHub Secrets
+- ProxyJump (bastion host) används för säker åtkomst till interna miljöer
+- Endast privata nycklar används (lösenordsfri autentisering)
+- HTTPS är aktiverat på webbservern via Let's Encrypt och Nginx
