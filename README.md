@@ -59,6 +59,28 @@ För att möjliggöra säker och automatiserad deployment från GitHub Actions t
 
 GitHub Actions använder sedan nyckeln för att ansluta till servern via SSH och köra deployment-kommandon (t.ex. git pull)
 
+## 🔒 HTTPS och SSL/TLS-säkerhet
+
+Applikationen är säkrad med HTTPS via ett kostnadsfritt SSL/TLS-certifikat från **Let's Encrypt**. Certifikatet hanteras automatiskt med hjälp av **Certbot**, och installationen sker direkt på reverse proxy-servern (Nginx).
+
+Funktionaliteten bygger på följande:
+
+- **Port 443** är öppen på reverse proxy-servern för att tillåta HTTPS-trafik.
+- **Domänen (`wavvy.se`) pekar till reverse proxy-serverns IP** via A-poster i DNS (Loopia).
+- **Certbot** används för att automatiskt:
+  - Generera och installera SSL-certifikat
+  - Förnya certifikaten regelbundet
+- **Nginx** är konfigurerad att lyssna på både port 80 och 443, och omdirigerar trafik från HTTP till HTTPS.
+
+Därmed säkerställs:
+- Krypterad kommunikation mellan klient och server
+- Skydd mot man-in-the-middle-attacker
+- Förbättrad SEO och användarförtroende
+
+Exempel på tillgänglig tjänst:
+https://wavvy.se
+
+
 ## 🔄 CI/CD Pipeline
 
 - GitHub Actions används för automatisk deployment
