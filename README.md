@@ -175,7 +175,7 @@ Det här är en `cloud-config`-fil som automatiserar installationen av en LEMP-s
 
 ## 📄 cloud-config.yaml
 
-yaml
+```yaml
 #cloud-config
 # Application server with LEMP stack for Azure MySQL connectivity
 
