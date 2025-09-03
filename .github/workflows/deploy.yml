@@ -7,22 +7,23 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
-      - name: Deploy to web server via bastion
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.BASTION_IP }}
-          username: ${{ secrets.BASTION_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          script: |
-            ssh -o StrictHostKeyChecking=no azureuser@10.0.1.4 << 'EOF'
-              cd /var/www/html
-              git pull origin main
-              sudo systemctl reload ngnix
-            EOF
+    - name: Setup SSH keys
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.BASTION_PRIVATE_KEY }}" > ~/.ssh/id_bastion
+        echo "${{ secrets.APP_SERVER_PRIVATE_KEY }}" > ~/.ssh/id_app
+        chmod 600 ~/.ssh/id_bastion ~/.ssh/id_app
 
+        printf "Host bastion\n  HostName ${{ secrets.BASTION_IP }}\n  User ${{ secrets.BASTION_USERNAME }}\n  IdentityFile ~/.ssh/id_bastion\n  StrictHostKeyChecking no\n\nHost webserver\n  HostName ${{ secrets.APP_SERVER_IP }}\n  User ${{ secrets.APP_SERVER_USERNAME }}\n  IdentityFile ~/.ssh/id_app\n  ProxyJump bastion\n  StrictHostKeyChecking no\n" > ~/.ssh/config
+        chmod 600 ~/.ssh/config
+
+    - name: Deploy to webserver
+      run: |
+        ssh webserver << 'EOF'
+          cd /var/www/html
+          git pull origin main
+          sudo systemctl reload nginx
+        EOF
