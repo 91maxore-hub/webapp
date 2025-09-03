@@ -147,7 +147,7 @@ Tillsammans utgör dessa filer en komplett webbapplikation med både frontend oc
 
 # ☁️ Infrastruktur & Deployment
 
----
+
 
 ## 🖥️ Applikationsserver (Appserver)
 
