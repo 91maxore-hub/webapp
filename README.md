@@ -2,6 +2,8 @@
 
 En enkel men komplett webbapplikation som visar mitt namn och innehåller ett kontaktformulär. Applikationen är hostad på en säker Ubuntu-server i Azure med bastion host, reverse proxy och blob storage för lagring av formulärsvar.
 
+![alt text](image.png)
+
 ---
 
 # Infrastrukturuppsättning i Azure
