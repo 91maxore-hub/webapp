@@ -4,7 +4,9 @@ Detta är en enkel men robust webbapplikation som inkluderar ett kontaktformulä
 
 Infrastrukturen bygger på flera virtuella servrar: en bastionhost som möjliggör säker administration, en reverse proxy som fungerar som trafikhanterare, samt applikationsservern där webbapplikationen körs. Denna arkitektur säkerställer en välstrukturerad och säker driftmiljö.
 
-https://wavvy.se
+<p align="center">
+  https://wavvy.se
+</p>
 
 ![alt text](image-1.png)
 
