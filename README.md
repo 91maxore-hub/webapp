@@ -4,6 +4,21 @@ En enkel men komplett webbapplikation som visar mitt namn och innehåller ett ko
 
 ---
 
+# Infrastrukturuppsättning i Azure
+
+För att strukturera projektets infrastruktur på ett säkert och skalbart sätt har jag inledningsvis skapat en resursgrupp vid namn **rg-webapp-mysql.** Denna resursgrupp fungerar som en samlad plats för alla relaterade resurser inom projektet.
+
+Därefter konfigurerades ett virtuellt nätverk med namnet **vnet-webapp-mysql**, vilket är baserat på adressrymden **10.0.0.0/16.** Detta nätverk är indelat i flera undernät (subnets), där varje del har ett tydligt syfte och ansvar för olika komponenter i lösningen:
+
+| Subnät                | Adressrymd    | Syfte                                                                                                                         |
+| --------------------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `app-subnet`          | `10.0.1.0/24` | Här placeras applikationsservern som kör webbapplikationen.                                                                   |
+| `db-subnet`           | `10.0.2.0/24` | Används för att isolera MySQL-databasen i en separat zon.                                                                     |
+| `reverseproxy-subnet` | `10.0.3.0/24` | Innehåller en reverse proxy-server som hanterar trafik mellan klient och applikation.                                         |
+| `bastionhost-subnet`  | `10.0.4.0/24` | Innehåller en Bastion Host som möjliggör säker administration (SSH) utan att exponera virtuella maskiner direkt mot internet. |
+
+Denna uppdelning av nätverket möjliggör förbättrad säkerhet, enklare nätverksadministration och tydligare separering mellan olika typer av resurser.
+
 ## 🧰 Funktionalitet
 
 - ✅ Visar startsida (`index.html`)
@@ -126,16 +141,3 @@ Applikationen använder en CI/CD-pipeline (Continuous Integration & Continuous D
 - ProxyJump (bastion host) används för säker åtkomst till interna miljöer
 - Endast privata nycklar används (lösenordsfri autentisering)
 - HTTPS är aktiverat på webbservern via Let's Encrypt och Nginx
-
-Infrastrukturuppsättning i Azure
-
-För att strukturera projektets infrastruktur på ett säkert och skalbart sätt har jag inledningsvis skapat en resursgrupp vid namn rg-webapp-mysql. Denna resursgrupp fungerar som en samlad plats för alla relaterade resurser inom projektet.
-
-Därefter konfigurerades ett virtuellt nätverk med namnet vnet-webapp-mysql, vilket är baserat på adressrymden 10.0.0.0/16. Detta nätverk är indelat i flera undernät (subnets), där varje del har ett tydligt syfte och ansvar för olika komponenter i lösningen:
-
-| Subnät                | Adressrymd    | Syfte                                                                                                                         |
-| --------------------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `app-subnet`          | `10.0.1.0/24` | Här placeras applikationsservern som kör webbapplikationen.                                                                   |
-| `db-subnet`           | `10.0.2.0/24` | Används för att isolera MySQL-databasen i en separat zon.                                                                     |
-| `reverseproxy-subnet` | `10.0.3.0/24` | Innehåller en reverse proxy-server som hanterar trafik mellan klient och applikation.                                         |
-| `bastionhost-subnet`  | `10.0.4.0/24` | Innehåller en Bastion Host som möjliggör säker administration (SSH) utan att exponera virtuella maskiner direkt mot internet. |
