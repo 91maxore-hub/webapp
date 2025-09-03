@@ -18,12 +18,13 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Git pull on remote server via bastion
+      - name: Git pull on remote server via bastion (debug mode)
         run: |
-          ssh -o StrictHostKeyChecking=no \
+          ssh -v -o StrictHostKeyChecking=no \
               -o UserKnownHostsFile=/dev/null \
-              -o ProxyJump=${{ secrets.BASTION_USER }}@${{ secrets.BASTION_HOST }} \
+              -J ${{ secrets.BASTION_USER }}@${{ secrets.BASTION_HOST }} \
               ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }} << 'EOF'
+            echo "Connected as: $(whoami)"
             cd /var/www/html
             git pull origin main
           EOF
