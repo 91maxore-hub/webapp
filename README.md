@@ -13,6 +13,14 @@ Infrastrukturen bygger på flera virtuella servrar: en bastionhost som möjligg�
 
 ---
 
+
+
+
+
+
+
+
+
 # Infrastrukturuppsättning i Azure
 
 För att strukturera projektets infrastruktur på ett säkert och skalbart sätt har jag inledningsvis skapat en resursgrupp vid namn **rg-webapp-mysql.** Denna resursgrupp fungerar som en samlad plats för alla relaterade resurser inom projektet.
