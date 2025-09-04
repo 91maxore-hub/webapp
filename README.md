@@ -9,6 +9,7 @@ Infrastrukturen bygger på flera virtuella servrar: en bastionhost som möjligg�
 </p>
 
 ![alt text](image-1.png)
+![alt text](image-2.png)
 
 ---
 
