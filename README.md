@@ -9,11 +9,29 @@ Infrastrukturen bygger på flera virtuella servrar: en bastionhost som möjligg�
   <img src="image-1.png" alt="alt text" style="max-width: 100%; height: auto;" />
 </div>
 
-![alt text](image-2.png)
+<div style="text-align: center;">
 
----
+<img src="image-3.png" alt="Kontaktformulär" style="margin-bottom: 20px;" />
+<p style="margin-top: 0; margin-bottom: 50px;">
+  <strong>Bilaga 1:</strong> Visar webbapplikationens kontaktformulär där användare kan skicka meddelanden.
+</p>
 
-<div style="margin-top: 200px;"></div>
+<img src="image-4.png" alt="Meddelande skickat" style="margin-bottom: 20px;" />
+<p style="margin-top: 0; margin-bottom: 50px;">
+  <strong>Bilaga 2:</strong> Visar bekräftelse på att meddelandet skickats och datan sparats i Azure MySQL database och Azure Blob Storage.
+</p>
+</div>
+
+✅ Allt igång: Bastion, proxy och webbapp svarar korrekt  
+🟢 Systemet är live – från SSH-tunnel till frontend  
+🚀 Appen körs genom hela stacken utan problem  
+🔗 Infrastrukturen håller: Reverse Proxy → Applikationsserver → Klient  
+🔐 Bastion host tillgänglig för säker SSH-access  
+✅ SSH-anslutningar via bastion är uppe och stabila  
+🛰️ Uppkopplad, proxad och körklar  
+⚙️ Stabil trafik hela vägen från bastion till frontend
+
+<div style="margin-top: 210px;"></div>
 
 # Infrastrukturuppsättning i Azure
 
@@ -37,6 +55,9 @@ Genom att segmentera det virtuella nätverket i dedikerade subnät för olika fu
 - 🔐 **Nätverksisolering:** Databasen ligger i ett separat db-subnet utan direkt exponering mot internet, vilket minimerar risken för intrång.
 - 🔁 **Trafikstyrning och filtrering:** Med ett separat reverseproxy-subnet kan inkommande trafik kontrolleras och filtreras innan den når applikationen. Detta möjliggör implementation av t.ex. brandväggsregler, TLS-terminering och lastbalansering.
 - 👨‍💻 **Säker administration:** Genom att använda en Bastion Host i ett eget bastionhost-subnet undviks behovet av att öppna portar för SSH direkt mot de virtuella maskinerna. All åtkomst sker via Azure Bastion, vilket erbjuder en säker och spårbar inloggningsmetod.
+
+<div style="margin-top: 210px;"></div>
+
 
 # Applikationsserver (VM)
 
@@ -63,6 +84,9 @@ För automatiserad installation och konfiguration av programvaran användes en c
 - Tar emot och behandlar trafik från reverse proxy-servern
 - Hanterar användarsessioner och autentisering
 
+<div style="margin-top: 350px;"></div>
+
+
 # Reverse proxy-server (VM)
 
 Efter att applikationsservern var på plats skapades en virtuell maskin som fungerar som reverse proxy-server. Denna server ansvarar för att ta emot och hantera alla inkommande HTTP/HTTPS-förfrågningar, vidarebefordra dem till backend-webbservern, samt förbättra säkerheten genom att agera som en barriär mellan internet och interna resurser. Reverse proxy-servern hanterar också SSL-terminering, lastbalansering och kan bidra till att optimera prestanda genom cachning. Reverse Proxy-konfigurationen är bifogad längst ner i rapporten.
@@ -86,6 +110,8 @@ Efter att applikationsservern var på plats skapades en virtuell maskin som fung
 - Proxyar och vidarebefordrar trafik till applikationsservern på interna IP-adresser
 - Förbättrar säkerheten genom att agera som en barriär och begränsa direkt åtkomst till applikationsservern
 
+<div style="margin-top: 350px;"></div>
+
 # Bastion-host server (VM)
 
 Efter att både applikationsservern och reverse proxy-servern var på plats skapades en virtuell maskin som fungerar som bastion-host. Denna server ansvarar för att ge säker fjärråtkomst till resurser i det privata nätverket, utan att exponera dem direkt mot internet. Bastion-host fungerar som en säker gateway för administration, och minskar risken för obehörig åtkomst genom att centralisera och skydda anslutningarna.
@@ -108,6 +134,8 @@ Efter att både applikationsservern och reverse proxy-servern var på plats skap
 - Används som hopppunkt (ProxyJump) vid fjärradministration och i CI/CD-pipelines
 - Centraliserar och begränsar åtkomst för att minska risken för obehörig åtkomst
 - Skyddar interna servrar genom att undvika direkt exponering mot internet
+
+<div style="margin-top: 380px;"></div>
 
 
 # Databaskonfiguration: Azure Database for MySQL – Flexible Server
@@ -134,6 +162,8 @@ För att hantera lagring och hantering av applikationens databas skapades en **A
 - Ansluts privat via VNet för ökad säkerhet
 - Ger automatisk backup och hög tillgänglighet
 - Optimerad för utvecklingsmiljö med flexibel resursanvändning
+
+<div style="margin-top: 350px;"></div>
 
 # Applikationsfiler och deras funktion
 
@@ -162,7 +192,7 @@ Tillsammans utgör dessa filer en komplett webbapplikation med både frontend oc
 - ✅ Responsiv design via `style.css`
 - ✅ Lagrar formulärsvar i Azure Blob Storage
 
----
+<div style="margin-top: 350px;"></div>
 
 # ☁️ Infrastruktur, Säkerhet & Deployment
 
@@ -203,6 +233,8 @@ Deploymentprocessen är automatiserad via en CI/CD-pipeline som säkerställer s
 - ✅ Brandvägg tillåter endast nödvändig trafik (t.ex. HTTPS via reverse proxy)
 - ✅ TLS/HTTPS används med giltiga certifikat på reverse proxy
 
+<div style="margin-top: 350px;"></div>
+
 ## 🔒 Network Security Groups (NSG)
 
 | **NSG-namn**          | **Tillämpat på**      | **Port(ar)**           | **Användning / Syfte**                                                                                                                                                                                                                 |
@@ -233,14 +265,16 @@ Nedan visas en översikt över de miljövariabler och hemligheter som används f
 | `VM_USER`         | `azureuser`                         | Användare för applikationsserver    |
 
 
+<div style="margin-top: 350px;"></div>
+
 ## 🔐 Hantering av SSH-nycklar
 
 För att möjliggöra säker och automatiserad deployment från GitHub Actions till webbservern används SSH-nyckelbaserad autentisering:
 - Ett nyckelpar (privat + publik) genereras lokalt
-- Den privata nyckeln (id_rsa) läggs till som en GitHub Secret i repositoryt (SSH_PRIVATE_KEY)
+- Den privata nyckeln (id_rsa) läggs till som en GitHub Secret i repositoryt (**SSH_PRIVATE_KEY**)
 - Den publika nyckeln (id_rsa.pub) läggs till i filen ~/.ssh/authorized_keys på:
-  - Bastion Host
-  - Appservern
+  - **Bastion Host**
+  - **Appservern**
 
 GitHub Actions använder sedan nyckeln för att ansluta till servern via SSH och köra deployment-kommandon (t.ex. git pull)
 
@@ -277,6 +311,8 @@ Applikationen använder en CI/CD-pipeline (Continuous Integration & Continuous D
 - Starta om applikationen vid behov (t.ex. nginx)
 - Verifiera och hantera miljövariabler och hemligheter via GitHub Secrets
 
+<div style="margin-top: 350px;"></div>
+
 ## 🛠️ Processflöde
 
 - När en ändring pushas till main-branchen startas arbetsflödet automatiskt.
@@ -290,6 +326,8 @@ Applikationen använder en CI/CD-pipeline (Continuous Integration & Continuous D
 - ProxyJump (bastion host) används för säker åtkomst till interna miljöer
 - Endast privata nycklar används (lösenordsfri autentisering)
 - HTTPS är aktiverat på webbservern via Let's Encrypt och Nginx
+
+<div style="margin-top: 750px;"></div>
 
 # Bilagor till koder som tillhör webbapplikationen
 
@@ -359,8 +397,10 @@ runcmd:
   - systemctl enable php8.1-fpm
 ```
 
+  <div style="margin-top: 750px;"></div>
+  
   ## 📄 database_setup.php
-  Denna fil ansluter till Azure MySQL med säker SSL-anslutning och skapar tabellen contacts om den inte redan finns. Den används för att konfigurera databasen som webbapplikationen behöver.
+  Denna fil ansluter till Azure MySQL med säker SSL-anslutning och skapar tabellen **contacts** om den inte redan finns. Den används för att konfigurera databasen som webbapplikationen behöver.
 
 ```php
 <?php
@@ -399,6 +439,8 @@ try {
 }
 ?>
 ``` 
+
+<div style="margin-top: 350px;"></div>
 
 ## 📄 index.html
 Startsidan för webbapplikationen som presenterar kontaktappens syfte och arkitektur. Den innehåller navigering till formulär och meddelandelista samt ger en översikt över tekniska funktioner.
@@ -446,6 +488,9 @@ Startsidan för webbapplikationen som presenterar kontaktappens syfte och arkite
 </body>
 </html>
 ```
+
+<div style="margin-top: 350px;"></div>
+
 ## 📄 contact_form.html
 En webbsida med ett kontaktformulär där användare kan skicka namn, e-post och meddelande. Formuläret skickar data till servern för vidare hantering.
 
@@ -679,6 +724,8 @@ try {
 </body>
 </html>
 ```
+
+<div style="margin-top: 350px;"></div>
 
 ## 📄 style.css
 Denna fil innehåller enkel och ren styling för webbapplikationen, inklusive layout, färger, knappar, formulär och responsiv design för bättre användarupplevelse på olika enheter.
@@ -953,7 +1000,7 @@ main {
 ```
 
 ## 📄 Reverse Proxy-konfiguration
-**/etc/nginx/sites-available/default** är Nginx-konfigurationsfilen som används för att ställa in reverse proxy på din server. Den definierar hur inkommande HTTP-förfrågningar tas emot och vidarebefordras till backend-applikationer eller servrar, vilket gör att Nginx agerar som en mellanhand som hanterar trafik och säkerställer smidig kommunikation mellan klient och applikation.
+**/etc/nginx/sites-available/default** är Nginx-konfigurationsfilen som används för att ställa in reverse proxy på serven. Den definierar hur inkommande HTTP-förfrågningar tas emot och vidarebefordras till backend-servrer, vilket gör att Nginx agerar som en mellanhand som hanterar trafik och säkerställer smidig kommunikation mellan klient och applikation.
 
 ```bash
 server {
