@@ -187,6 +187,7 @@ Deploymentprocessen är automatiserad via en CI/CD-pipeline som säkerställer s
 
 - Lagrar formulärdata och bifogade filer från webbapplikationen
 - Formulärsvar sparas som .json-fil i Blob Storage
+- Svaren lagras i en container som heter **responses**
 - Separat lagring utanför applikationsservern för bättre skalbarhet och säkerhet
 - Åtkomst sker via API-anrop från applikationen
 
