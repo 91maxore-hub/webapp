@@ -267,16 +267,17 @@ https://wavvy.se
 
 Applikationen använder en CI/CD-pipeline (Continuous Integration & Continuous Deployment) via GitHub Actions för att automatiskt:
 
-- Bygga och testa kod (vid behov)
+- Bygga och testa kod
 - Ansluta till webbservern via SSH genom en bastion host och reverse proxy
 - Utföra git pull för att hämta senaste versionen av koden till servern
-- Köra eventuella byggsteg (t.ex. npm install, composer install, etc.)
-- Starta om applikationen vid behov (t.ex. med pm2)
+- Köra eventuella byggsteg (t.ex. php-fpm install, composer install, etc.)
+- Starta om applikationen vid behov (t.ex. nginx)
+- Verifiera och hantera miljövariabler och hemligheter via GitHub Secrets
 
 ## 🛠️ Processflöde
 
 - När en ändring pushas till main-branchen startas arbetsflödet automatiskt.
-- En GitHub Actions-runner sätter upp en säker SSH-anslutning till bastion/reverse proxy.
+- En GitHub Actions-runner sätter upp en säker SSH-anslutning till bastion host och vidare via reverse proxy till webbservern.
 - På målsystemet hämtas den senaste koden.
 - Tjänsten startas om så att ändringarna blir synliga direkt.
 
@@ -286,8 +287,6 @@ Applikationen använder en CI/CD-pipeline (Continuous Integration & Continuous D
 - ProxyJump (bastion host) används för säker åtkomst till interna miljöer
 - Endast privata nycklar används (lösenordsfri autentisering)
 - HTTPS är aktiverat på webbservern via Let's Encrypt och Nginx
-
-Cloud-init: Automatiserad serverkonfiguration
 
 # Bilagor till koder som tillhör webbapplikationen
 
