@@ -13,13 +13,7 @@ Infrastrukturen bygger på flera virtuella servrar: en bastionhost som möjligg�
 
 ---
 
-
-
-
-
-
-
-
+<br><br><br><br>
 
 # Infrastrukturuppsättning i Azure
 
