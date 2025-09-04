@@ -194,9 +194,11 @@ Deploymentprocessen är automatiserad via en CI/CD-pipeline som säkerställer s
 ## 🔐 Säkerhet
 
 - ✅ Endast bastion host är öppen mot internet
-- ✅ Webbserver är endast tillgänglig via bastionen (SSH ProxyJump)
+- ✅ Applikationsservern är endast tillgänglig via bastionen (SSH ProxyJump)
 - ✅ SSH-nycklar hanteras säkert via GitHub Secrets
 - ✅ Automatisk uppdatering av serverns known_hosts via pipeline
+- ✅ Brandvägg tillåter endast nödvändig trafik (t.ex. HTTPS via reverse proxy)
+- ✅ TLS/HTTPS används med giltiga certifikat på reverse proxy
 
 ## 🔒 Network Security Groups (NSG)
 
