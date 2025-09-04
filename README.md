@@ -245,7 +245,7 @@ GitHub Actions använder sedan nyckeln för att ansluta till servern via SSH och
 
 Applikationen är säkrad med HTTPS via ett kostnadsfritt SSL/TLS-certifikat från **Let's Encrypt**. Certifikatet hanteras automatiskt med hjälp av **Certbot**, och installationen sker direkt på reverse proxy-servern (Nginx).
 
-Funktionaliteten bygger på följande:
+**Funktionaliteten bygger på följande:**
 
 - **Port 443** är öppen på reverse proxy-servern för att tillåta HTTPS-trafik.
 - **Domänen (`wavvy.se`) pekar till reverse proxy-serverns IP** via A-poster i DNS (Loopia).
@@ -254,7 +254,7 @@ Funktionaliteten bygger på följande:
   - Förnya certifikaten regelbundet
 - **Nginx** är konfigurerad att lyssna på både port 80 och 443, och omdirigerar trafik från HTTP till HTTPS.
 
-Därmed säkerställs:
+**Därmed säkerställs:**
 - Krypterad kommunikation mellan klient och server
 - Skydd mot man-in-the-middle-attacker
 - Förbättrad SEO och användarförtroende
