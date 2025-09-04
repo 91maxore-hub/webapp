@@ -50,7 +50,7 @@ Efter att nätverksinfrastrukturen var på plats skapades en virtuell maskin som
 | **Virtuellt nätverk** | `vnet-webapp-mysql`                                   |
 | **Subnet**            | `app-subnet` (`10.0.1.0/24`)                          |
 
-För automatiserad installation och konfiguration av programvaran användes en cloud-init-fil. Denna fil ser till att alla nödvändiga komponenter för applikationsdrift installeras och konfigureras vid uppstart.
+För automatiserad installation och konfiguration av programvaran användes en cloud-init-fil. Denna fil ser till att alla nödvändiga komponenter för applikationsdrift installeras och konfigureras vid uppstart. Cloud-init-konfigurationen är bifogad längst ner i rapporten.
 
 ## 🖥️ Applikationsserver (Appserver)
 
@@ -62,7 +62,7 @@ För automatiserad installation och konfiguration av programvaran användes en c
 
 # Reverse proxy-server (VM)
 
-Efter att applikationsservern var på plats skapades en virtuell maskin som fungerar som reverse proxy-server. Denna server ansvarar för att ta emot och hantera alla inkommande HTTP/HTTPS-förfrågningar, vidarebefordra dem till backend-webbservern, samt förbättra säkerheten genom att agera som en barriär mellan internet och interna resurser. Reverse proxy-servern hanterar också SSL-terminering, lastbalansering och kan bidra till att optimera prestanda genom cachning. Reverse Proxy-konfigurationen är bifogat sista i rapporten.
+Efter att applikationsservern var på plats skapades en virtuell maskin som fungerar som reverse proxy-server. Denna server ansvarar för att ta emot och hantera alla inkommande HTTP/HTTPS-förfrågningar, vidarebefordra dem till backend-webbservern, samt förbättra säkerheten genom att agera som en barriär mellan internet och interna resurser. Reverse proxy-servern hanterar också SSL-terminering, lastbalansering och kan bidra till att optimera prestanda genom cachning. Reverse Proxy-konfigurationen är bifogad längst ner i rapporten.
 
 **Konfiguration av virtuell maskin**
 
@@ -109,7 +109,7 @@ Efter att både applikationsservern och reverse proxy-servern var på plats skap
 
 # Databaskonfiguration: Azure Database for MySQL – Flexible Server
 
-För att hantera lagring och hantering av applikationens databas skapades en Azure Database for MySQL – Flexible Server. Denna tjänst är optimerad för utvecklingsmiljöer och erbjuder hög tillgänglighet, automatiska säkerhetskopior samt flexibel resurshantering.
+För att hantera lagring och hantering av applikationens databas skapades en **Azure Database for MySQL – Flexible Server.** Denna tjänst är optimerad för utvecklingsmiljöer och erbjuder hög tillgänglighet, automatiska säkerhetskopior samt flexibel resurshantering.
 
 | Parameter                  | Värde                                               |
 | -------------------------- | --------------------------------------------------- |
