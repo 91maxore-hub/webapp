@@ -4,16 +4,14 @@ Detta är en enkel men robust webbapplikation som inkluderar ett kontaktformulä
 
 Infrastrukturen bygger på flera virtuella servrar: en bastionhost som möjliggör säker administration, en reverse proxy som fungerar som trafikhanterare, samt applikationsservern där webbapplikationen körs. Denna arkitektur säkerställer en välstrukturerad och säker driftmiljö.
 
-<p align="center">
-  https://wavvy.se
-</p>
+[https://wavvy.se](https://wavvy.se)
 
 ![alt text](image-1.png)
 ![alt text](image-2.png)
 
 ---
 
-<br><br><br><br>
+<div style="margin-top: 200px;"></div>
 
 # Infrastrukturuppsättning i Azure
 
