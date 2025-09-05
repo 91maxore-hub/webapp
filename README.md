@@ -320,6 +320,8 @@ Applikationen är säkrad med HTTPS via ett kostnadsfritt SSL/TLS-certifikat fr�
 Exempel på tillgänglig tjänst:
 https://wavvy.se
 
+<div style="margin-top: 350px;"></div>
+
 
 ## 🚀 CI/CD-pipeline med GitHub Actions
 
@@ -336,9 +338,6 @@ Applikationen använder en CI/CD-pipeline (Continuous Integration & Continuous D
 ![alt text](image.png)
 
 
-
-<div style="margin-top: 350px;"></div>
-
 ## 🛠️ Processflöde
 
 - När en ändring pushas till main-branchen startas arbetsflödet automatiskt.
@@ -347,6 +346,8 @@ Applikationen använder en CI/CD-pipeline (Continuous Integration & Continuous D
 - Tjänsten startas om så att ändringarna blir synliga direkt.
 - Miljövariabler och hemligheter hämtas säkert från GitHub Secrets vid varje körning.
 - Automatiska tester körs innan deployment för att säkerställa att koden fungerar som förväntat.
+
+<div style="margin-top: 350px;"></div>
 
 ## 🔐 Säkerhet i pipelinen
 
