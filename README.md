@@ -1,12 +1,18 @@
-# 🌐 Modern Webapp med Bastionhost, Reverse Proxy och Automatiserad CI/CD
+# 🌐 Modern LEMP-baserad Webapp med Bastionhost, Reverse Proxy och CI/CD
 
 Detta är en enkel men robust webbapplikation som inkluderar ett kontaktformulär för användarinteraktion. Applikationen är hostad på en Ubuntu-baserad virtuell server i Azure och skyddas av en bastionhost för säker fjärråtkomst. En reverse proxy används för att hantera och dirigera inkommande trafik, vilket förbättrar både prestanda och säkerhet. Data från kontaktformuläret lagras tryggt i Azure Blob Storage.
 
 Infrastrukturen bygger på flera virtuella servrar: en bastionhost som möjliggör säker administration, en reverse proxy som fungerar som trafikhanterare, samt applikationsservern där webbapplikationen körs. Denna arkitektur säkerställer en välstrukturerad och säker driftmiljö.
 
+All trafik till applikationen är skyddad med SSL/TLS-kryptering, vilket garanterar säker kommunikation mellan klient och server. Systemet är dessutom förstärkt med nätverkssegmentering via Network Security Groups (NSG), vilket begränsar åtkomsten mellan olika delar av infrastrukturen och skyddar mot obehörig åtkomst.
+
+Utvecklings- och leveransprocessen är automatiserad med hjälp av en CI/CD-pipeline implementerad via GitHub Actions. Detta möjliggör kontinuerlig integration och leverans av kodförändringar på ett kontrollerat och effektivt sätt, vilket minimerar risken för fel vid driftsättning och underlättar snabb iteration.
+
+SSH-åtkomst hanteras säkert via en bastionhost, där endast autentisering med SSH-nycklar tillåts. Övriga servrar är isolerade och nås enbart via bastionhosten.
+
 <div style="page-break-inside: avoid; text-align: center;">
   <a href="https://wavvy.se">https://wavvy.se</a><br><br>
-  <img src="image-1.png" alt="alt text" style="max-width: 100%; height: auto;" />
+  <img src="image-5.png" alt="alt text" style="max-width: 100%; height: auto;" />
 </div>
 
 <div style="text-align: center;">
@@ -22,14 +28,14 @@ Infrastrukturen bygger på flera virtuella servrar: en bastionhost som möjligg�
 </p>
 </div>
 
-✅ Allt igång: Bastion, proxy och webbapp svarar korrekt  
-🟢 Systemet är live – från SSH-tunnel till frontend  
+✅ Allt igång: Bastion, reverse proxy, webbapp och MySQL-databas svarar korrekt  
+🟢 Systemet är live – hela vägen från SSH-tunnel till frontend  
 🚀 Appen körs genom hela stacken utan problem  
 🔗 Infrastrukturen håller: Reverse Proxy → Applikationsserver → Klient  
 🔐 Bastion host tillgänglig för säker SSH-access  
 ✅ SSH-anslutningar via bastion är uppe och stabila  
-🛰️ Uppkopplad, proxad och körklar  
-⚙️ Stabil trafik hela vägen från bastion till frontend
+📥 Formulärsvaren lagras säkert och tillgängligt i Azure Blob Storage  
+⚙️ Stabil trafik hela vägen – från bastion till frontend
 
 <div style="margin-top: 210px;"></div>
 
@@ -37,7 +43,7 @@ Infrastrukturen bygger på flera virtuella servrar: en bastionhost som möjligg�
 
 För att strukturera projektets infrastruktur på ett säkert och skalbart sätt har jag inledningsvis skapat en resursgrupp vid namn **rg-webapp-mysql.** Denna resursgrupp fungerar som en samlad plats för alla relaterade resurser inom projektet.
 
-Därefter konfigurerades ett virtuellt nätverk med namnet **vnet-webapp-mysql**, vilket är baserat på adressrymden **10.0.0.0/16.** Detta nätverk är indelat i flera undernät (subnets), där varje del har ett tydligt syfte och ansvar för olika komponenter i lösningen:
+Därefter konfigurerades ett virtuellt nätverk med namnet **vnet-webapp-mysql**, vilket är baserat på adressrymden **10.0.0.0/16.** Detta nätverk är indelat i flera subnets, där varje del har ett tydligt syfte och ansvar för olika komponenter i lösningen:
 
 | Subnät                | Adressrymd    | Syfte                                                                                                                         |
 | --------------------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------- |
@@ -74,7 +80,7 @@ Efter att nätverksinfrastrukturen var på plats skapades en virtuell maskin som
 | **Virtuellt nätverk** | `vnet-webapp-mysql`                                   |
 | **Subnet**            | `app-subnet` (`10.0.1.0/24`)                          |
 
-För automatiserad installation och konfiguration av programvaran användes en cloud-init-fil. Denna fil ser till att alla nödvändiga komponenter för applikationsdrift installeras och konfigureras vid uppstart. Cloud-init-konfigurationen är bifogad längst ner i rapporten.
+För automatiserad installation och konfiguration av programvaran användes en cloud-init-kod. Denna kod ser till att alla nödvändiga komponenter för applikationsdrift installeras och konfigureras vid uppstart. Cloud-init-konfigurationen är bifogad längst ner i rapporten.
 
 ## 🖥️ Applikationsserver (Appserver)
 
@@ -83,6 +89,9 @@ För automatiserad installation och konfiguration av programvaran användes en c
 - Ansvarar för kommunikation med databasen (MySQL)
 - Tar emot och behandlar trafik från reverse proxy-servern
 - Hanterar användarsessioner och autentisering
+- Placeras i isolerat subnet med nätverkssäkerhetsgrupper (NSG) för strikt åtkomstkontroll
+- Automatiserad installation och konfiguration via cloud-init
+- SSH-åtkomst sker via bastion host med nyckelbaserad autentisering
 
 <div style="margin-top: 350px;"></div>
 
@@ -107,14 +116,15 @@ Efter att applikationsservern var på plats skapades en virtuell maskin som fung
 **Operativsystem**: Ubuntu 24.04 LTS
 - Tar emot och hanterar alla inkommande HTTP/HTTPS-förfrågningar
 - Utför SSL-terminering med hjälp av Let's Encrypt-certifikat
-- Proxyar och vidarebefordrar trafik till applikationsservern på interna IP-adresser
+- Vidarebefordrar och proxyar trafik till applikationsservern. 
 - Förbättrar säkerheten genom att agera som en barriär och begränsa direkt åtkomst till applikationsservern
+- Begränsar SSH-åtkomst och denna hanteras via bastion host för ökad säkerhet
 
 <div style="margin-top: 350px;"></div>
 
-# Bastion-host server (VM)
+# Bastion Host server (VM)
 
-Efter att både applikationsservern och reverse proxy-servern var på plats skapades en virtuell maskin som fungerar som bastion-host. Denna server ansvarar för att ge säker fjärråtkomst till resurser i det privata nätverket, utan att exponera dem direkt mot internet. Bastion-host fungerar som en säker gateway för administration, och minskar risken för obehörig åtkomst genom att centralisera och skydda anslutningarna.
+Efter att både applikationsservern och reverse proxy-servern var på plats skapades en virtuell maskin som fungerar som bastion host. Denna server ansvarar för att ge säker fjärråtkomst till resurser i det privata nätverket, utan att exponera dem direkt mot internet. Bastion host fungerar som en säker gateway för administration, och minskar risken för obehörig åtkomst genom att centralisera och skydda anslutningarna.
 
 **Konfiguration av virtuell maskin**
 
@@ -133,6 +143,7 @@ Efter att både applikationsservern och reverse proxy-servern var på plats skap
 - Fungerar som en säker gateway för SSH-anslutningar till interna servrar
 - Används som hopppunkt (ProxyJump) vid fjärradministration och i CI/CD-pipelines
 - Centraliserar och begränsar åtkomst för att minska risken för obehörig åtkomst
+- Endast nyckelbaserad autentisering tillåts för SSH-anslutningar  
 - Skyddar interna servrar genom att undvika direkt exponering mot internet
 
 <div style="margin-top: 380px;"></div>
@@ -224,16 +235,24 @@ Deploymentprocessen är automatiserad via en CI/CD-pipeline som säkerställer s
 - Separat lagring utanför applikationsservern för bättre skalbarhet och säkerhet
 - Åtkomst sker via API-anrop från applikationen
 
+![alt text](image-6.png)
+
+<div style="margin-top: 350px;"></div>
+
 ## 🔐 Säkerhet
 
 - ✅ Endast bastion host är öppen mot internet
 - ✅ Applikationsservern är endast tillgänglig via bastionen (SSH ProxyJump)
-- ✅ SSH-nycklar hanteras säkert via GitHub Secrets
+- ✅ Miljövariabler och SSH-nycklar hanteras säkert via **GitHub Secrets**
 - ✅ Automatisk uppdatering av serverns known_hosts via pipeline
 - ✅ Brandvägg tillåter endast nödvändig trafik (t.ex. HTTPS via reverse proxy)
 - ✅ TLS/HTTPS används med giltiga certifikat på reverse proxy
-
-<div style="margin-top: 350px;"></div>
+- ✅ Reverse proxy är den enda som får prata med applikationsservern
+- ✅ Deploy sker via GitHub Actions som CI/CD-lösning
+- ✅ Databasen är inte exponerad mot internet
+- ✅ **Network Security Groups (NSG)** används för att kontrollera och begränsa vilken trafik som får passera mellan olika delar av nätverket och servrarna.
+- ✅ **Application Security Groups (ASG)** hjälper till att gruppera servrar (som bastion och reverse proxy) så att NSG-regler kan tillämpas på dessa grupper istället för enskilda IP-adresser.
+- ✅ Detta gör sammanfattningsvis att endast tillåten trafik når applikationsservern, exempelvis SSH från bastion och HTTP/HTTPS från reverse proxy, vilket ökar säkerheten.
 
 ## 🔒 Network Security Groups (NSG)
 
@@ -244,13 +263,14 @@ Deploymentprocessen är automatiserad via en CI/CD-pipeline som säkerställer s
 | `vm-reverseproxy-nsg` | Reverse Proxy VM      | 80 (HTTP), 443 (HTTPS) | Tillåter kontrollerad HTTP/HTTPS-trafik från internet till reverse proxy för att säkert exponera webbapplikationen                                                                                                                     |
 | `webapp-nsg`          | Applikationsserver VM | 80 (HTTP), 22 (SSH)    | ASG\:erna `ReverseProxyASG` (HTTP/HTTPS) och `BastionHostASG` (SSH) används som destination i NSG-regler för att tillåta trafik från reverse proxyn respektive bastionhost till webbapplikationen, som inte är exponerad mot internet. |
 
+<div style="margin-top: 350px;"></div>
+
 ## 🔒 Application Security Groups (ASG)
 
 | **ASG-namn**      | **Tillämpat på** | **Användning / Syfte**                                                                                               |
 | ----------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------- |
 | `ReverseProxyASG` | Reverse Proxy VM | Används som **destination** i NSG-regel för att tillåta HTTP/HTTPS-trafik till webbapplikationen från reverse proxyn |
 | `BastionHostASG`  | Bastion Host VM  | Används som **destination** i NSG-regel för att tillåta SSH-trafik till webbapplikationen från bastionhost           |
-
 
 ## 🔐 GitHub Secrets
 
@@ -264,12 +284,13 @@ Nedan visas en översikt över de miljövariabler och hemligheter som används f
 | `VM_HOST`         | `10.0.1.4`                          | Intern IP till applikationsserver   |
 | `VM_USER`         | `azureuser`                         | Användare för applikationsserver    |
 
+![alt text](image-10.png)
 
 <div style="margin-top: 350px;"></div>
 
 ## 🔐 Hantering av SSH-nycklar
 
-För att möjliggöra säker och automatiserad deployment från GitHub Actions till webbservern används SSH-nyckelbaserad autentisering:
+För att möjliggöra säker och automatiserad deployment från GitHub Actions till applikationsservern används SSH-nyckelbaserad autentisering:
 - Ett nyckelpar (privat + publik) genereras lokalt
 - Den privata nyckeln (id_rsa) läggs till som en GitHub Secret i repositoryt (**SSH_PRIVATE_KEY**)
 - Den publika nyckeln (id_rsa.pub) läggs till i filen ~/.ssh/authorized_keys på:
@@ -310,6 +331,7 @@ Applikationen använder en CI/CD-pipeline (Continuous Integration & Continuous D
 - Köra eventuella byggsteg (t.ex. php-fpm install, composer install, etc.)
 - Starta om applikationen vid behov (t.ex. nginx)
 - Verifiera och hantera miljövariabler och hemligheter via GitHub Secrets
+- Säkerställa att alla beroenden är uppdaterade och säkra
 
 <div style="margin-top: 350px;"></div>
 
@@ -319,13 +341,18 @@ Applikationen använder en CI/CD-pipeline (Continuous Integration & Continuous D
 - En GitHub Actions-runner sätter upp en säker SSH-anslutning till bastion host och vidare via reverse proxy till webbservern.
 - På målsystemet hämtas den senaste koden.
 - Tjänsten startas om så att ändringarna blir synliga direkt.
+- Miljövariabler och hemligheter hämtas säkert från GitHub Secrets vid varje körning.
+- Automatiska tester körs innan deployment för att säkerställa att koden fungerar som förväntat.
 
 ## 🔐 Säkerhet i pipelinen
 
 - SSH-nycklar hanteras säkert via GitHub Secrets
 - ProxyJump (bastion host) används för säker åtkomst till interna miljöer
 - Endast privata nycklar används (lösenordsfri autentisering)
-- HTTPS är aktiverat på webbservern via Let's Encrypt och Nginx
+- HTTPS är aktiverat på applikationsservern via Let's Encrypt och Nginx
+- Miljövariabler och andra hemligheter hanteras endast via GitHub Secrets, aldrig hårdkodade i koden
+- Endast main-branchen tillåts trigga deployment för att undvika oavsiktliga uppdateringar
+- GitHub Actions-runnern använder en dedikerad användare med begränsade rättigheter för SSH-access via bastionen
 
 <div style="margin-top: 750px;"></div>
 
