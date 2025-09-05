@@ -359,7 +359,7 @@ Applikationen använder en CI/CD-pipeline (Continuous Integration & Continuous D
 - Endast main-branchen tillåts trigga deployment för att undvika oavsiktliga uppdateringar
 - GitHub Actions-runnern använder en dedikerad användare med begränsade rättigheter för SSH-access via bastionen
 
-<div style="margin-top: 750px;"></div>
+<div style="margin-top: 800px;"></div>
 
 # Bilagor till koder som tillhör webbapplikationen
 
