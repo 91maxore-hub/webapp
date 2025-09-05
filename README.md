@@ -337,7 +337,6 @@ Applikationen använder en CI/CD-pipeline (Continuous Integration & Continuous D
 
 ![alt text](image.png)
 
-
 ## 🛠️ Processflöde
 
 - När en ändring pushas till main-branchen startas arbetsflödet automatiskt.
