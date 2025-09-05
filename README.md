@@ -333,6 +333,10 @@ Applikationen använder en CI/CD-pipeline (Continuous Integration & Continuous D
 - Verifiera och hantera miljövariabler och hemligheter via GitHub Secrets
 - Säkerställa att alla beroenden är uppdaterade och säkra
 
+![alt text](image.png)
+
+
+
 <div style="margin-top: 350px;"></div>
 
 ## 🛠️ Processflöde
